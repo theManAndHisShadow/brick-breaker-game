@@ -44,7 +44,7 @@ function getUI({ screen, fontSize = 20, fontName = 'monospace', lineSpacing = 4,
     
                 // Render the element value with the correct labell width offset
                 context.fillStyle = valueColor;
-                context.fillText(value, x + labelRect.width, y); 
+                context.fillText(value, x + labelRect.width + 3, y); 
             },
         };
     };
