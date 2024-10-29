@@ -1,4 +1,4 @@
-const generateBricks = (startX, startY, endX, endY, brickSize = 20) => {
+function generateBricks (startX, startY, endX, endY, brickSize = 20) {
     const offset = 1;
     const columns = Math.floor((endX - startX) / (brickSize + offset));
     const rows = Math.floor((endY - startY) / (brickSize + offset));
@@ -21,7 +21,9 @@ const generateBricks = (startX, startY, endX, endY, brickSize = 20) => {
     return generatedArray;
 };
 
-const checkIntersections = (ball, platform, bricks, bounds) => {
+
+
+function checkIntersections (ball, platform, bricks, bounds) {
     let ballTop = ball.cy - ball.size;
     let ballBottom = ball.cy + ball.size
     let ballLeft = ball.cx - ball.size;
@@ -92,7 +94,9 @@ const checkIntersections = (ball, platform, bricks, bounds) => {
     }
 };
 
-const calculateBounce = (ball, platform) => {
+
+
+function calculateBounce (ball, platform) {
     const platformCenterX = platform.x + (platform.width / 2);
     const offsetX = ball.cx - platformCenterX;
     const platformHalfWidth = platform.width / 2;
@@ -108,7 +112,8 @@ const calculateBounce = (ball, platform) => {
 };
 
     
-const calcBallNextPos = (ball) => {
+
+function calcBallNextPos (ball) {
     let { dx, dy } = ball;
 
     if (dx !== 0 || dy !== 0) {
