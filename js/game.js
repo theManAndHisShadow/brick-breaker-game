@@ -1,4 +1,4 @@
-function getGame({bricksGridPos, screen}){
+function getGame({bricksGridPos, screen, onBrickBreak = () => {}}){
     let score = 0;
     
     const objects = {
@@ -51,7 +51,7 @@ function getGame({bricksGridPos, screen}){
             const { context } = screen;
 
             // intersections
-            checkIntersections(objects.ball, objects.platform, objects.bricks, screen.bounds);
+            checkIntersections(objects.ball, objects.platform, objects.bricks, screen.bounds, onBrickBreak);
         
             // ball movements
             calcBallNextPos(objects.ball);
