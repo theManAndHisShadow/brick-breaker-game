@@ -127,30 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         context.clearRect(0, 0, width, height);
         drawBG();
 
-        // intersections
-        checkIntersections(game.objects.ball, game.objects.player, game.objects.bricks, game.bounds);
-
-        // ball movements
-        calcBallNextPos(game.objects.ball);
-
-        for (let gameObject of game.objects.all) {
-            let { shape } = gameObject;
-
-            if (shape === 'rect') {
-                let { x, y, width, height, type, color } = gameObject;
-
-                context.fillStyle = color;
-                context.fillRect(x, y, width, height);
-            } else if (shape === 'circle') {
-                let { cx, cy, size, color, type, isLinkedToPlatform } = gameObject;
-
-                context.beginPath();
-                context.arc(cx, cy, size, 0, 2 * Math.PI, false);
-                context.fillStyle = isLinkedToPlatform === true ? 'green' : color;
-                context.fill();
-                context.closePath();
-            }
-        }
+        drawGameFrame(context, game);
 
         context.strokeStyle = boundingRectColor;
         context.lineWidth = boundingRectThickness;
