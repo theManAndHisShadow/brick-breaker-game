@@ -54,7 +54,7 @@ function checkIntersections (ball, platform, bricks, bounds) {
                 ball.dy *= -1;
                 ball.bounces.fromBrick += 1;
 
-                // console.log(game.objects.ball.bounces.fromBrick);
+                // console.log(Game.objects.ball.bounces.fromBrick);
             }
         }
     }

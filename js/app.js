@@ -8,59 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
         boundsThickness: 2,
     });
 
-    // stortage place
-    const game = {
-        score: 0,
-
-        objects: {
-            platform: {
-                width: 100,
-                height: 8,
-                x: (Screen.width / 2) - (100 / 2),
-                y: Screen.height - 69,
-                shape: 'rect',
-                color: 'rgb(115, 115, 115)',
-                type: 'platform',
-            },
-            ball: {
-                type: 'ball',
-                color: 'white',
-                shape: 'circle',
-                cx: Screen.width / 2,
-                cy: Screen.height - 75,
-                dx: 0,
-                dy: 0,
-                size: 6,
-                angle: 90,
-                speed: 0,
-                isLinkedToPlatform: true,
-                isWaitingStart: true,
-                bounces: {
-                    fromBrick: 0,
-                    fromPlatform: 0,
-                    fromBoundary: 0,
-                },
-            },
-
-            bricks: generateBricks(
-                0 + (Screen.bounds.padding * 4),       // start x
-                0 + (Screen.bounds.padding * 4),       // start y
-                Screen.width - (Screen.bounds.padding * 4),   // end x
-                300 + (Screen.bounds.padding * 1)      // end y
-            ),
-
-            all: [],
-        },
-    };
-
-    // link special 'all' value
-    game.objects.all = [game.objects.platform, game.objects.ball, ...game.objects.bricks];
+    const Game = getGame({
+        screen: Screen,
+        bricksGridPos: {
+            startX: 0 + (Screen.bounds.padding * 4),            // start x
+            startY: 0 + (Screen.bounds.padding * 4),            // start y
+            endX: Screen.width - (Screen.bounds.padding * 4),   // end x
+            endY: 300 + (Screen.bounds.padding * 1)             // end y
+        }
+    });
 
 
     // interactions
     Screen.body.addEventListener('mousemove', (event) => {
         if (event.layerX >= 0 && event.layerX <= Screen.width) {
-            let { platform, ball } = game.objects;
+            let { platform, ball } = Game.objects;
 
             let newX = event.layerX - (platform.width / 2);
 
@@ -86,8 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     Screen.body.addEventListener('click', () => {
-        if (game.objects.ball.isWaitingStart === true) {
-            const { ball } = game.objects;
+        if (Game.objects.ball.isWaitingStart === true) {
+            const { ball } = Game.objects;
             ball.isWaitingStart = false;
             ball.isLinkedToPlatform = false;
 
@@ -103,13 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const loop = () => {
         // Screen.clear();
         Screen.drawBackground();
-        drawGameFrame(Screen, game);
         Screen.drawBoundary();
+
+        Game.render();
 
         requestAnimationFrame(loop);
     }
-
-    console.log(Screen);
 
 
     // calling main function using 'requestAnimationFrame()'
