@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    const UI = getUI({
+        screen: Screen,
+    });
+
 
     // interactions
     document.body.addEventListener('mousemove', (event) => {
@@ -59,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         Screen.drawBoundary();
 
         Game.render();
+        UI.render();
 
         requestAnimationFrame(loop);
     }
