@@ -20,10 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // interactions
-    Screen.body.addEventListener('mousemove', (event) => {
+    document.body.addEventListener('mousemove', (event) => {
+        // limit platform's movement
         if (event.layerX >= 0 && event.layerX <= Screen.width) {
             let { platform, ball } = Game.objects;
-
             let newX = event.layerX - (platform.width / 2);
 
             if (newX >= Screen.bounds.left && newX <= Screen.bounds.right - platform.width) {
@@ -33,8 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     ball.cx = newX + (platform.width / 2);
                 }
             }
-        } else {
-            console.log('Mouse is out of bounds!');
         }
     });
 
