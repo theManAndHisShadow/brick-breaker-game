@@ -13,14 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
         score: 0,
 
         objects: {
-            player: {
+            platform: {
                 width: 100,
                 height: 8,
                 x: (Screen.width / 2) - (100 / 2),
                 y: Screen.height - 69,
                 shape: 'rect',
                 color: 'rgb(115, 115, 115)',
-                type: 'player',
+                type: 'platform',
             },
             ball: {
                 type: 'ball',
@@ -54,21 +54,21 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // link special 'all' value
-    game.objects.all = [game.objects.player, game.objects.ball, ...game.objects.bricks];
+    game.objects.all = [game.objects.platform, game.objects.ball, ...game.objects.bricks];
 
 
     // interactions
     Screen.body.addEventListener('mousemove', (event) => {
         if (event.layerX >= 0 && event.layerX <= Screen.width) {
-            let { player, ball } = game.objects;
+            let { platform, ball } = game.objects;
 
-            let newX = event.layerX - (player.width / 2);
+            let newX = event.layerX - (platform.width / 2);
 
-            if (newX >= Screen.bounds.left && newX <= Screen.bounds.right - player.width) {
-                player.x = newX;
+            if (newX >= Screen.bounds.left && newX <= Screen.bounds.right - platform.width) {
+                platform.x = newX;
 
                 if (ball.isLinkedToPlatform === true) {
-                    ball.cx = newX + (player.width / 2);
+                    ball.cx = newX + (platform.width / 2);
                 }
             }
         } else {

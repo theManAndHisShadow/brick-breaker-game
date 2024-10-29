@@ -3,7 +3,7 @@ function drawGameFrame(screenObject, gameObject){
     const { context } = screenObject;
 
     // intersections
-    checkIntersections(gameObject.objects.ball, gameObject.objects.player, gameObject.objects.bricks, screenObject.bounds);
+    checkIntersections(gameObject.objects.ball, gameObject.objects.platform, gameObject.objects.bricks, screenObject.bounds);
 
     // ball movements
     calcBallNextPos(gameObject.objects.ball);
