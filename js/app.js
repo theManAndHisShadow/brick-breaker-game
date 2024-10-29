@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const calcBallNextPos = (ball) => {
-        let { angle, dx, dy } = ball;
+        let { dx, dy } = ball;
 
         if (dx !== 0 || dy !== 0) {
             // updating pos of ball
@@ -272,6 +272,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     requestAnimationFrame(loop);
-
-    console.log(canvas, context);
 });
