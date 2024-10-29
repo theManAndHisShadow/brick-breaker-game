@@ -50,14 +50,14 @@ function getUI({ screen, fontSize = 20, fontName = 'monospace', lineSpacing = 4,
     };
     
 
-    const score = getNewUIelement({
+    const scores = getNewUIelement({
         x: 20, y: 35,
         name: 'Scores',
     });
 
     const time = getNewUIelement({
-        x: score.rect.bottomLeft.x, 
-        y: score.rect.bottomLeft.y,
+        x: scores.rect.bottomLeft.x, 
+        y: scores.rect.bottomLeft.y,
         name: 'Time',
     });
 
@@ -68,7 +68,7 @@ function getUI({ screen, fontSize = 20, fontName = 'monospace', lineSpacing = 4,
     });
 
     const items = {
-        score: score,
+        scores: scores,
         time: time,
         status: status,
     };
