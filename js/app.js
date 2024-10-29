@@ -1,46 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // basic preparations
-    const width = 800;
-    const height = 500;
-    const bgColor = 'rgba(0, 0, 0, 1)';
-
-    let canvas = document.querySelector('div[data-game-id="brick-breaker"] canvas');
-    canvas.width = width;
-    canvas.height = height;
-
-    let context = canvas.getContext('2d');
-
-
-
-    // main functions
-    const drawBG = () => {
-        context.fillStyle = bgColor;
-        context.fillRect(0, 0, width, height);
-    }
-
-
-    // some game settings
-    const boundingRectMargin = 10;
-    const boundingRectThickness = 2;
-    const boundingRectOffset = boundingRectMargin + boundingRectMargin;
-    const boundingRectColor = 'red';
+    const Screen = getScreen({
+        width: 800,
+        height: 500,
+        selector: 'div[data-game-id="brick-breaker"] canvas',
+        boundaryPadding: 10,
+        boundsColor: 'red',
+        boundsThickness: 2,
+    });
 
     // stortage place
     const game = {
         score: 0,
-        bounds: {
-            left: 0 + boundingRectOffset,
-            right: width - boundingRectOffset,
-            top: 0 + boundingRectOffset,
-            bottom: height - boundingRectOffset,
-        },
 
         objects: {
             player: {
                 width: 100,
                 height: 8,
-                x: (width / 2) - (100 / 2),
-                y: height - 69,
+                x: (Screen.width / 2) - (100 / 2),
+                y: Screen.height - 69,
                 shape: 'rect',
                 color: 'rgb(115, 115, 115)',
                 type: 'player',
@@ -49,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 type: 'ball',
                 color: 'white',
                 shape: 'circle',
-                cx: width / 2,
-                cy: height - 75,
+                cx: Screen.width / 2,
+                cy: Screen.height - 75,
                 dx: 0,
                 dy: 0,
                 size: 6,
@@ -66,10 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
             },
 
             bricks: generateBricks(
-                0 + (boundingRectOffset * 4),       // start x
-                0 + (boundingRectOffset * 4),       // start y
-                width - (boundingRectOffset * 4),   // end x
-                300 + (boundingRectOffset * 1)      // end y
+                0 + (Screen.bounds.padding * 4),       // start x
+                0 + (Screen.bounds.padding * 4),       // start y
+                Screen.width - (Screen.bounds.padding * 4),   // end x
+                300 + (Screen.bounds.padding * 1)      // end y
             ),
 
             all: [],
@@ -81,13 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // interactions
-    canvas.addEventListener('mousemove', (event) => {
-        if (event.layerX >= 0 && event.layerX <= width) {
+    Screen.body.addEventListener('mousemove', (event) => {
+        if (event.layerX >= 0 && event.layerX <= Screen.width) {
             let { player, ball } = game.objects;
 
             let newX = event.layerX - (player.width / 2);
 
-            if (newX >= game.bounds.left && newX <= game.bounds.right - player.width) {
+            if (newX >= Screen.bounds.left && newX <= Screen.bounds.right - player.width) {
                 player.x = newX;
 
                 if (ball.isLinkedToPlatform === true) {
@@ -99,16 +76,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    canvas.addEventListener('mouseenter', () => {
-        canvas.style.cursor = 'none';
+    Screen.body.addEventListener('mouseenter', () => {
+        Screen.body.style.cursor = 'none';
     });
 
-    canvas.addEventListener('mouseover', () => {
-        canvas.style.cursor = 'initial';
+    Screen.body.addEventListener('mouseover', () => {
+        Screen.body.style.cursor = 'initial';
     });
 
 
-    canvas.addEventListener('click', () => {
+    Screen.body.addEventListener('click', () => {
         if (game.objects.ball.isWaitingStart === true) {
             const { ball } = game.objects;
             ball.isWaitingStart = false;
@@ -124,17 +101,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // main function
     const loop = () => {
-        context.clearRect(0, 0, width, height);
-        drawBG();
-
-        drawGameFrame(context, game);
-
-        context.strokeStyle = boundingRectColor;
-        context.lineWidth = boundingRectThickness;
-        context.strokeRect(game.bounds.left, game.bounds.top, game.bounds.right - boundingRectOffset, game.bounds.bottom - boundingRectOffset);
+        // Screen.clear();
+        Screen.drawBackground();
+        drawGameFrame(Screen, game);
+        Screen.drawBoundary();
 
         requestAnimationFrame(loop);
     }
+
+    console.log(Screen);
 
 
     // calling main function using 'requestAnimationFrame()'
