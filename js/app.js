@@ -12,10 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const Game = getGame({
         screen: Screen,
         bricksGridPos: {
-            startX: 0 + (Screen.bounds.padding * 4),            // start x
-            startY: 0 + (Screen.bounds.padding * 4),            // start y
-            endX: Screen.width - (Screen.bounds.padding * 4),   // end x
-            endY: 300 + (Screen.bounds.padding * 1)             // end y
+            startX: 0 + (Screen.bounds.padding * 8),            // start x
+            startY: 0 + (Screen.bounds.padding * 8),            // start y
+            endX: Screen.width - (Screen.bounds.padding * 8),   // end x
+            endY: 300 + (Screen.bounds.padding * 2)             // end y
         }
     });
 
