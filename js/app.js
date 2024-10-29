@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const UI = getUI({
         screen: Screen,
+        fontSize: 16,
     });
 
     const Game = getGame({
