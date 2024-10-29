@@ -37,9 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return generatedArray;
     };
 
-    const getRandomNumInRange = (from, to) => {
-        return Math.floor(Math.random() * (to - from + 1) + from);
-    }
 
     const calculateBounce = (ball, platform) => {
         const platformCenterX = platform.x + (platform.width / 2);
@@ -127,10 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ball.dx *= -1;
             ball.cx = game.bounds.right - ball.size;
         }
-    };
-
-    const normalizeToRange = (value, originalMin, originalMax, targetMin, targetMax) => {
-        return ((value - originalMin) * (targetMax - targetMin)) / (originalMax - originalMin) + targetMin;
     };
 
 
