@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         boundaryPadding: 10,
         boundsColor: 'red',
         boundsThickness: 2,
+        hideMouse: true,
     });
 
     const Game = getGame({
@@ -34,14 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-    });
-
-    Screen.body.addEventListener('mouseenter', () => {
-        Screen.body.style.cursor = 'none';
-    });
-
-    Screen.body.addEventListener('mouseover', () => {
-        Screen.body.style.cursor = 'initial';
     });
 
 

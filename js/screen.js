@@ -1,4 +1,4 @@
-function getScreen({width = 400, height = 400, fillColor = 'rgba(0, 0, 0, 1)', selector = 'canvas',  boundaryPadding = 0, boundsColor, boundsThickness}) {
+function getScreen({width = 400, height = 400, fillColor = 'rgba(0, 0, 0, 1)', hideMouse = false, selector = 'canvas',  boundaryPadding = 0, boundsColor, boundsThickness}) {
     const canvas = document.querySelector(selector);
     const context = canvas.getContext('2d');
     const boundsObject = {
@@ -13,6 +13,16 @@ function getScreen({width = 400, height = 400, fillColor = 'rgba(0, 0, 0, 1)', s
     // set canvas sizes
     canvas.width = width;
     canvas.height = height;
+
+    if(hideMouse) {
+        canvas.addEventListener('mouseenter', () => {
+            canvas.style.cursor = 'none';
+        });
+
+        canvas.addEventListener('mouseover', () => {
+            canvas.style.cursor = 'initial';
+        });
+    }
 
     return {
         body: canvas,
