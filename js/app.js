@@ -91,6 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     ball.dx *= -1;
                     ball.dy *= -1;
                     ball.bounces.fromBrick += 1;
+
+                    console.log(game.objects.ball.bounces.fromBrick);
                 }
             }
         }
@@ -106,11 +108,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (ballTop <= game.bounds.top) {
             ball.dy *= -1;
             ball.cy = game.bounds.top + ball.size;
+            ball.bounces.fromBoundary += 1;
         }
 
         if (ballBottom >= game.bounds.bottom) {
             ball.dy *= -1;
             ball.cy = game.bounds.bottom - ball.size;
+            ball.bounces.fromBoundary += 1;
             // The game may end or the ball position may reset
             // add some logic later
         }
@@ -118,11 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (ballLeft < game.bounds.left) {
             ball.dx *= -1;
             ball.cx = game.bounds.left + ball.size;
+            ball.bounces.fromBoundary += 1;
         }
 
         if (ballRight >= game.bounds.right) {
             ball.dx *= -1;
             ball.cx = game.bounds.right - ball.size;
+            ball.bounces.fromBoundary += 1;
         }
     };
 
@@ -145,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // stortage place
     const game = {
+        score: 0,
         bounds: {
             left: 0 + boundingRectOffset,
             right: width - boundingRectOffset,
@@ -178,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 bounces: {
                     fromBrick: 0,
                     fromPlatform: 0,
+                    fromBoundary: 0,
                 },
             },
 
