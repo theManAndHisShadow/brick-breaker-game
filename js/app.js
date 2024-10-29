@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
         hideMouse: true,
     });
 
+
+    const UI = getUI({
+        screen: Screen,
+    });
+
     const Game = getGame({
         screen: Screen,
         bricksGridPos: {
@@ -16,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
             startY: 0 + (Screen.bounds.padding * 8),            // start y
             endX: Screen.width - (Screen.bounds.padding * 8),   // end x
             endY: 300 + (Screen.bounds.padding * 2)             // end y
-        }
-    });
+        },
 
-    const UI = getUI({
-        screen: Screen,
+        onBrickBreak: (bouncesObject) => {
+            UI.items.scores.updateValue(bouncesObject.fromBrick * 10);
+        }
     });
 
 
