@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.height = height;
 
     let context = canvas.getContext('2d');
+
+
+
+    // main functions
     const drawBG = () => {
         context.fillStyle = bgColor;
         context.fillRect(0, 0, width, height);
@@ -70,11 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let brick of game.objects.bricks) {
             if (brick.health > 0) {
-                let brickTop = brick.y;
-                let brickBottom = brick.y + brick.height;
-                let brickLeft = brick.x;
-                let brickRight = brick.x + brick.width;
-
                 // Determine the closest point to the center of the ball on the brick
                 const closestX = Math.max(brick.x, Math.min(ball.cx, brick.x + brick.width));
                 const closestY = Math.max(brick.y, Math.min(ball.cy, brick.y + brick.height));
@@ -144,6 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+
+    // some game settings
     const boundingRectMargin = 10;
     const boundingRectThickness = 2;
     const boundingRectOffset = boundingRectMargin + boundingRectMargin;
@@ -200,8 +201,11 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     };
 
+    // link special 'all' value
     game.objects.all = [game.objects.player, game.objects.ball, ...game.objects.bricks];
 
+
+    // interactions
     canvas.addEventListener('mousemove', (event) => {
         if (event.layerX >= 0 && event.layerX <= width) {
             let { player, ball } = game.objects;
@@ -242,6 +246,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+
+
     // main function
     const loop = () => {
         context.clearRect(0, 0, width, height);
@@ -279,5 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(loop);
     }
 
+
+    // calling main function using 'requestAnimationFrame()'
     requestAnimationFrame(loop);
 });
