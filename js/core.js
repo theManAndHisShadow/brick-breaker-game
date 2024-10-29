@@ -44,7 +44,8 @@ function changeAngle(ball, angleOffset) {
 
 
 
-function checkIntersections(ball, platform, bricks, bounds) {
+function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersection = () => {}) {
+    
     let ballTop = ball.cy - ball.size;
     let ballBottom = ball.cy + ball.size;
     let ballLeft = ball.cx - ball.size;
@@ -75,7 +76,7 @@ function checkIntersections(ball, platform, bricks, bounds) {
                 changeAngle(ball, angleOffset); 
                 ball.bounces.fromBrick += 1;
 
-                console.log('Current score:', ball.bounces.fromBrick);
+                callbackOnIntersection(ball.bounces);
             }
         }
     }
