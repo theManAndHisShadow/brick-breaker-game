@@ -1,14 +1,21 @@
-import { generateBricks, checkIntersections, calcBallNextPos } from "./core.ts";
+import { generateBricks, checkIntersections, calcBallNextPos } from "./core";
+import { Ball, BrickGrid, Game, GameObjects, Screen } from "./global.types.js";
 
-export default function getGame({bricksGridPos, screen, onBrickBreak = () => {}}){
+interface GameParams {
+    bricksGridPos: BrickGrid,
+    screen: Screen,
+    onBrickBreak: any,
+}
+
+export default function getGame(params: GameParams){
     let score = 0;
     
-    const objects = {
+    const objects: GameObjects = {
         platform: {
             width: 100,
             height: 8,
-            x: (screen.width / 2) - (100 / 2),
-            y: screen.height - 69,
+            x: (params.screen.width / 2) - (100 / 2),
+            y: params.screen.height - 69,
             shape: 'rect',
             color: 'rgb(115, 115, 115)',
             type: 'platform',
@@ -17,14 +24,13 @@ export default function getGame({bricksGridPos, screen, onBrickBreak = () => {}}
             type: 'ball',
             color: 'white',
             shape: 'circle',
-            x: screen.width / 2,
-            y: screen.height - 75,
+            x: params.screen.width / 2,
+            y: params.screen.height - 75,
             dx: 0,
             dy: 0,
             width: 6,
             height: 6,
             angle: 90,
-            speed: 0,
             isLinkedToPlatform: true,
             isWaitingStart: true,
             bounces: {
@@ -36,26 +42,26 @@ export default function getGame({bricksGridPos, screen, onBrickBreak = () => {}}
         },
 
         bricks: generateBricks(
-            bricksGridPos.startX,
-            bricksGridPos.startY,
-            bricksGridPos.endX,
-            bricksGridPos.endY,
+            params.bricksGridPos.startX,
+            params.bricksGridPos.startY,
+            params.bricksGridPos.endX,
+            params.bricksGridPos.endY,
         ),
 
         all: [],
     };
 
-    // link special 'all' value
+    
     objects.all = [objects.platform, objects.ball, ...objects.bricks];
 
-    return {
+    const GameObject: Game = {
         score: score,
         objects: objects,
         render: () => {
-            const { context } = screen;
+            const { context } = params.screen;
 
             // intersections
-            checkIntersections(objects.ball, objects.platform, objects.bricks, screen.bounds, onBrickBreak);
+            checkIntersections(objects.ball, objects.platform, objects.bricks, params.screen.bounds, params.onBrickBreak);
         
             // ball movements
             calcBallNextPos(objects.ball);
@@ -64,12 +70,12 @@ export default function getGame({bricksGridPos, screen, onBrickBreak = () => {}}
                 let { shape } = object;
         
                 if (shape === 'rect') {
-                    let { x, y, width, height, type, color } = object;
+                    let { x, y, width, height, color } = object;
         
                     context.fillStyle = color;
                     context.fillRect(x, y, width, height);
                 } else if (shape === 'circle') {
-                    let { x, y, width, color, type, isLinkedToPlatform } = object;
+                    let { x, y, width, color, isLinkedToPlatform } = object as Ball;
         
                     context.beginPath();
                     context.arc(x, y, width, 0, 2 * Math.PI, false);
@@ -80,4 +86,6 @@ export default function getGame({bricksGridPos, screen, onBrickBreak = () => {}}
             }
         },
     }
+
+    return GameObject;
 }

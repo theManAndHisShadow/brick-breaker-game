@@ -1,6 +1,6 @@
 import getScreen from "./screen.js";
 import getUI from "./ui.js";
-import getGame from "./game.js";
+import getGame from "./game";
 
 document.addEventListener('DOMContentLoaded', () => {
     const Screen = getScreen({
