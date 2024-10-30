@@ -97,34 +97,24 @@ function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersecti
         }
     }
 
-    // Bounce on boundaries without random angle
-    if (ballTop <= bounds.top) {
-        ball.dy *= -1;
-        ball.cy = bounds.top + ball.size;
+    // depending on the bounce location - change the y or x position
+    if (ballTop <= bounds.top) ball.cy = bounds.top + ball.size;
+    if (ballBottom >= bounds.bottom) ball.cy = bounds.bottom - ball.size;
+    if (ballLeft < bounds.left) ball.cx = bounds.left + ball.size;
+    if (ballRight >= bounds.right) ball.cx = bounds.right - ball.size;
+
+    // implement vertical bounce delta component (y velocity)
+    if (ballTop <= bounds.top || ballBottom >= bounds.bottom) ball.dy *= -1;
+
+    // implement horizontal bounce delta component (x velocity)
+    if (ballLeft < bounds.left || ballRight >= bounds.right) ball.dx *= -1;
+
+    // If the bounce is from the border - update the counter of bounces from the borders and indicate that the last bounce was from the border
+    if (ballTop <= bounds.top || ballBottom >= bounds.bottom || ballLeft < bounds.left || ballRight >= bounds.right) {
         ball.bounces.fromBoundary += 1;
         ball.bounces.lastBounceFrom = 'bound';
     }
 
-    if (ballBottom >= bounds.bottom) {
-        ball.dy *= -1;
-        ball.cy = bounds.bottom - ball.size;
-        ball.bounces.fromBoundary += 1;
-        ball.bounces.lastBounceFrom = 'bound';
-    }
-
-    if (ballLeft < bounds.left) {
-        ball.dx *= -1;
-        ball.cx = bounds.left + ball.size;
-        ball.bounces.fromBoundary += 1;
-        ball.bounces.lastBounceFrom = 'bound';
-    }
-
-    if (ballRight >= bounds.right) {
-        ball.dx *= -1;
-        ball.cx = bounds.right - ball.size;
-        ball.bounces.fromBoundary += 1;
-        ball.bounces.lastBounceFrom = 'bound';
-    }
 }
 
 
