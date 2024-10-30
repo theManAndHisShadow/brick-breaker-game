@@ -1,4 +1,4 @@
-export interface GameObject {
+export interface PrimitiveObject {
     width: number,
     height: number,
     x: number,
@@ -15,7 +15,7 @@ export interface BounceStatistics {
     fromBoundary: number,
 }
 
-export interface Ball extends GameObject {
+export interface Ball extends PrimitiveObject {
     dx: number,
     dy: number,
     angle: number,
@@ -24,11 +24,18 @@ export interface Ball extends GameObject {
     bounces: BounceStatistics,
 };
 
-export interface Platform extends GameObject {};
+export interface Platform extends PrimitiveObject {};
 
-export interface Brick extends GameObject {
+export interface Brick extends PrimitiveObject {
     health: number,
 };
+
+export interface BrickGrid {
+    startX: number, 
+    startY: number, 
+    endX: number, 
+    endY: number
+}
 
 export interface Bounds {
     padding: number,
@@ -36,4 +43,28 @@ export interface Bounds {
     left: number,
     right: number,
     bottom: number,
+};
+
+export interface GameObjects {
+    platform: Platform,
+    ball: Ball,
+    bricks: Brick[],
+    all: (Platform | Ball | Brick)[],
+}
+
+export interface Game {
+    score: number,
+    objects: GameObjects,
+    render (): void,
+};
+
+export interface Screen {
+    body: HTMLCanvasElement,
+    context: CanvasRenderingContext2D,
+    width: number,
+    height: number,
+    bounds: Bounds,
+    clear():void,
+    drawBackground(): void,
+    drawBoundary(): void,
 };
