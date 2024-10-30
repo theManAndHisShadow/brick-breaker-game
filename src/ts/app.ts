@@ -1,7 +1,14 @@
+import getScreen from "./screen";
+import getUI from "./ui";
+import getGame from "./game";
+
+import { Screen, UI, Game, BounceStatistics } from "./global.types";
+
 document.addEventListener('DOMContentLoaded', () => {
-    const Screen = getScreen({
+    const Screen: Screen = getScreen({
         width: 800,
         height: 500,
+        background: 'black',
         selector: 'div[data-game-id="brick-breaker"] canvas',
         boundaryPadding: 10,
         boundsColor: 'red',
@@ -10,12 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    const UI = getUI({
+    const UI: UI = getUI({
         screen: Screen,
         fontSize: 16,
     });
 
-    const Game = getGame({
+    const Game: Game = getGame({
         screen: Screen,
         bricksGridPos: {
             startX: 0 + (Screen.bounds.padding * 8),            // start x
@@ -24,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
             endY: 300 + (Screen.bounds.padding * 2)             // end y
         },
 
-        onBrickBreak: (bouncesObject) => {
-            UI.items.scores.updateValue(bouncesObject.fromBrick * 10);
+        onBrickBreak: (bounces: BounceStatistics) => {
+            UI.getElementById('scores').updateValue(bounces.fromBrick * 10);
         }
     });
 
@@ -41,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 platform.x = newX;
 
                 if (ball.isLinkedToPlatform === true) {
-                    ball.cx = newX + (platform.width / 2);
+                    ball.x = newX + (platform.width / 2);
                 }
             }
         }
