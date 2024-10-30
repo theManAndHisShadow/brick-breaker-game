@@ -1,4 +1,4 @@
-import { getRandomFloat } from "./helpers.js";
+import { getRandomFloat } from "./helpers.ts";
 
 export function generateBricks (startX, startY, endX, endY, brickSize = 20) {
     const offset = 1;
