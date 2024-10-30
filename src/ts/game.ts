@@ -1,3 +1,6 @@
+import Ball from "./classes/Ball";
+import Brick from "./classes/Brick";
+import Platform from "./classes/Platform";
 import { generateBricks, checkIntersections, calcBallNextPos } from "./core";
 import { BallType, BrickGridType, GameType, GameObjectsType, ScreenType } from "./global.types.js";
 
@@ -11,19 +14,17 @@ export default function getGame(params: GameParams){
     let score = 0;
     
     const objects: GameObjectsType = {
-        platform: {
+        platform: new Platform({
             width: 100,
             height: 8,
             x: (params.screen.width / 2) - (100 / 2),
             y: params.screen.height - 69,
-            shape: 'rect',
             color: 'rgb(115, 115, 115)',
             type: 'platform',
-        },
-        ball: {
+        }),
+        ball: new Ball({
             type: 'ball',
             color: 'white',
-            shape: 'circle',
             x: params.screen.width / 2,
             y: params.screen.height - 75,
             dx: 0,
@@ -39,7 +40,7 @@ export default function getGame(params: GameParams){
                 fromPlatform: 0,
                 fromBoundary: 0,
             },
-        },
+        }),
 
         bricks: generateBricks(
             params.bricksGridPos.startX,
@@ -67,14 +68,12 @@ export default function getGame(params: GameParams){
             calcBallNextPos(objects.ball);
         
             for (let object of objects.all) {
-                let { shape } = object;
-        
-                if (shape === 'rect') {
+                if (object instanceof Brick || object instanceof Platform) {
                     let { x, y, width, height, color } = object;
         
                     context.fillStyle = color;
                     context.fillRect(x, y, width, height);
-                } else if (shape === 'circle') {
+                } else if(object instanceof Ball) {
                     let { x, y, width, color, isLinkedToPlatform } = object as BallType;
         
                     context.beginPath();
