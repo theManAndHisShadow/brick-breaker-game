@@ -69,8 +69,10 @@ function getUI({ screen, fontSize = 20, fontName = 'monospace', lineSpacing = 4,
 
     const items = {
         scores: scores,
-        time: time,
-        status: status,
+
+        // Temporarily disabled
+        // time: time,
+        // status: status,
     };
 
     return {
