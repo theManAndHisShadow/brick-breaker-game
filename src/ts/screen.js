@@ -1,4 +1,4 @@
-function getScreen({width = 400, height = 400, fillColor = 'rgba(0, 0, 0, 1)', hideMouse = false, selector = 'canvas',  boundaryPadding = 0, boundsColor, boundsThickness}) {
+export default function getScreen({width = 400, height = 400, fillColor = 'rgba(0, 0, 0, 1)', hideMouse = false, selector = 'canvas',  boundaryPadding = 0, boundsColor, boundsThickness}) {
     const canvas = document.querySelector(selector);
     const context = canvas.getContext('2d');
     const boundsObject = {

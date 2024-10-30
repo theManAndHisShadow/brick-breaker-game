@@ -1,5 +1,5 @@
 
-function getUI({ screen, fontSize = 20, fontName = 'monospace', lineSpacing = 4, labelColor = 'white', valueColor = 'white'}) {
+export default function getUI({ screen, fontSize = 20, fontName = 'monospace', lineSpacing = 4, labelColor = 'white', valueColor = 'white'}) {
     const { context } = screen;
 
     const getNewUIelement = function({name, x = 0, y = 0}) {

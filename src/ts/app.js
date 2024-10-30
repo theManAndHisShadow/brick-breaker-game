@@ -1,3 +1,7 @@
+import getScreen from "./screen.js";
+import getUI from "./ui.js";
+import getGame from "./game.js";
+
 document.addEventListener('DOMContentLoaded', () => {
     const Screen = getScreen({
         width: 800,

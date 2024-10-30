@@ -1,4 +1,6 @@
-function getGame({bricksGridPos, screen, onBrickBreak = () => {}}){
+import { generateBricks, checkIntersections, calcBallNextPos } from "./core.js";
+
+export default function getGame({bricksGridPos, screen, onBrickBreak = () => {}}){
     let score = 0;
     
     const objects = {

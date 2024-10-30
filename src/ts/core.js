@@ -1,4 +1,6 @@
-function generateBricks (startX, startY, endX, endY, brickSize = 20) {
+import { getRandomFloat } from "./helpers.js";
+
+export function generateBricks (startX, startY, endX, endY, brickSize = 20) {
     const offset = 1;
     const columns = Math.floor((endX - startX) / (brickSize + offset));
     const rows = Math.floor((endY - startY) / (brickSize + offset));
@@ -23,7 +25,7 @@ function generateBricks (startX, startY, endX, endY, brickSize = 20) {
 
 
 
-function changeAngle(ball, angleOffset) {
+export function changeAngle(ball, angleOffset) {
     // Convert the current speed to polar coordinates
     let speed = Math.sqrt(ball.dx * ball.dx + ball.dy * ball.dy);
     let angle = Math.atan2(ball.dy, ball.dx);
@@ -38,7 +40,7 @@ function changeAngle(ball, angleOffset) {
 
 
 
-function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersection = () => {}) {
+export function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersection = () => {}) {
     
     let ballTop = ball.cy - ball.size;
     let ballBottom = ball.cy + ball.size;
@@ -113,7 +115,7 @@ function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersecti
 
 
 
-function calculateBounce (ball, platform) {
+export function calculateBounce (ball, platform) {
     const platformCenterX = platform.x + (platform.width / 2);
     const offsetX = ball.cx - platformCenterX;
     const platformHalfWidth = platform.width / 2;
@@ -130,7 +132,7 @@ function calculateBounce (ball, platform) {
 
     
 
-function calcBallNextPos (ball) {
+export function calcBallNextPos (ball) {
     let { dx, dy } = ball;
 
     if (dx !== 0 || dy !== 0) {
