@@ -25,6 +25,7 @@ function getGame({bricksGridPos, screen, onBrickBreak = () => {}}){
             isLinkedToPlatform: true,
             isWaitingStart: true,
             bounces: {
+                lastBounceFrom: null,
                 fromBrick: 0,
                 fromPlatform: 0,
                 fromBoundary: 0,

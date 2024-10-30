@@ -23,12 +23,6 @@ function generateBricks (startX, startY, endX, endY, brickSize = 20) {
 
 
 
-function getRandomInt(min, max) {
-    return Math.random() * (max - min) + min;
-}
-
-
-
 function changeAngle(ball, angleOffset) {
     // Convert the current speed to polar coordinates
     let speed = Math.sqrt(ball.dx * ball.dx + ball.dy * ball.dy);
@@ -57,7 +51,7 @@ function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersecti
     let platformRight = platform.x + platform.width;
 
     // Small random angle
-    const angleOffset = getRandomInt(-0.2, 0.2);
+    const angleOffset = getRandomFloat(-0.2, 0.2);
 
     for (let brick of bricks) {
         if (brick.health > 0) {
@@ -72,9 +66,15 @@ function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersecti
 
                 // Mirror and add a random angle
                 ball.dx *= -1;
-                ball.dy *= -1;
-                changeAngle(ball, angleOffset); 
+
+                // adding zig zag effect when ball bounces from boundary
+                if(ball.bounces.lastBounceFrom !== 'bound') {
+                    ball.dy *= -1;
+                }
+
+                // changeAngle(ball, angleOffset); 
                 ball.bounces.fromBrick += 1;
+                ball.bounces.lastBounceFrom = brick.type;
 
                 callbackOnIntersection(ball.bounces);
             }
@@ -85,37 +85,30 @@ function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersecti
         if (ballBottom >= platformTop && ((ballLeft <= platformRight) && (ballRight >= platformLeft))) {
             ball.cy = platformTop - ball.size;
             calculateBounce(ball, platform);
-            changeAngle(ball, angleOffset);
+            changeAngle(ball, angleOffset); // Apply random angle only on platform bounce
             ball.bounces.fromPlatform += 1;
+            ball.bounces.lastBounceFrom = platform.type;
         }
     }
 
-    if (ballTop <= bounds.top) {
-        ball.dy *= -1;
-        ball.cy = bounds.top + ball.size;
-        changeAngle(ball, angleOffset);
+    // depending on the bounce location - change the y or x position
+    if (ballTop <= bounds.top) ball.cy = bounds.top + ball.size;
+    if (ballBottom >= bounds.bottom) ball.cy = bounds.bottom - ball.size;
+    if (ballLeft < bounds.left) ball.cx = bounds.left + ball.size;
+    if (ballRight >= bounds.right) ball.cx = bounds.right - ball.size;
+
+    // implement vertical bounce delta component (y velocity)
+    if (ballTop <= bounds.top || ballBottom >= bounds.bottom) ball.dy *= -1;
+
+    // implement horizontal bounce delta component (x velocity)
+    if (ballLeft < bounds.left || ballRight >= bounds.right) ball.dx *= -1;
+
+    // If the bounce is from the border - update the counter of bounces from the borders and indicate that the last bounce was from the border
+    if (ballTop <= bounds.top || ballBottom >= bounds.bottom || ballLeft < bounds.left || ballRight >= bounds.right) {
         ball.bounces.fromBoundary += 1;
+        ball.bounces.lastBounceFrom = 'bound';
     }
 
-    if (ballBottom >= bounds.bottom) {
-        ball.dy *= -1;
-        ball.cy = bounds.bottom - ball.size;
-        ball.bounces.fromBoundary += 1;
-    }
-
-    if (ballLeft < bounds.left) {
-        ball.dx *= -1;
-        ball.cx = bounds.left + ball.size;
-        changeAngle(ball, angleOffset);
-        ball.bounces.fromBoundary += 1;
-    }
-
-    if (ballRight >= bounds.right) {
-        ball.dx *= -1;
-        ball.cx = bounds.right - ball.size;
-        changeAngle(ball, angleOffset);
-        ball.bounces.fromBoundary += 1;
-    }
 }
 
 
