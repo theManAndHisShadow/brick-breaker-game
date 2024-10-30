@@ -23,12 +23,6 @@ function generateBricks (startX, startY, endX, endY, brickSize = 20) {
 
 
 
-function getRandomInt(min, max) {
-    return Math.random() * (max - min) + min;
-}
-
-
-
 function changeAngle(ball, angleOffset) {
     // Convert the current speed to polar coordinates
     let speed = Math.sqrt(ball.dx * ball.dx + ball.dy * ball.dy);
@@ -57,7 +51,7 @@ function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersecti
     let platformRight = platform.x + platform.width;
 
     // Small random angle
-    const angleOffset = getRandomInt(-0.2, 0.2);
+    const angleOffset = getRandomNumber(-0.2, 0.2);
 
     for (let brick of bricks) {
         if (brick.health > 0) {
