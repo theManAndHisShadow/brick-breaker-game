@@ -51,7 +51,7 @@ function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersecti
     let platformRight = platform.x + platform.width;
 
     // Small random angle
-    const angleOffset = getRandomNumber(-0.2, 0.2);
+    const angleOffset = getRandomFloat(-0.2, 0.2);
 
     for (let brick of bricks) {
         if (brick.health > 0) {
