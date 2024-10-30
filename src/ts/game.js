@@ -1,4 +1,4 @@
-import { generateBricks, checkIntersections, calcBallNextPos } from "./core.js";
+import { generateBricks, checkIntersections, calcBallNextPos } from "./core.ts";
 
 export default function getGame({bricksGridPos, screen, onBrickBreak = () => {}}){
     let score = 0;
@@ -17,11 +17,12 @@ export default function getGame({bricksGridPos, screen, onBrickBreak = () => {}}
             type: 'ball',
             color: 'white',
             shape: 'circle',
-            cx: screen.width / 2,
-            cy: screen.height - 75,
+            x: screen.width / 2,
+            y: screen.height - 75,
             dx: 0,
             dy: 0,
-            size: 6,
+            width: 6,
+            height: 6,
             angle: 90,
             speed: 0,
             isLinkedToPlatform: true,
@@ -68,10 +69,10 @@ export default function getGame({bricksGridPos, screen, onBrickBreak = () => {}}
                     context.fillStyle = color;
                     context.fillRect(x, y, width, height);
                 } else if (shape === 'circle') {
-                    let { cx, cy, size, color, type, isLinkedToPlatform } = object;
+                    let { x, y, width, color, type, isLinkedToPlatform } = object;
         
                     context.beginPath();
-                    context.arc(cx, cy, size, 0, 2 * Math.PI, false);
+                    context.arc(x, y, width, 0, 2 * Math.PI, false);
                     context.fillStyle = isLinkedToPlatform === true ? 'green' : color;
                     context.fill();
                     context.closePath();

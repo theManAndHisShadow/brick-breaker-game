@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 platform.x = newX;
 
                 if (ball.isLinkedToPlatform === true) {
-                    ball.cx = newX + (platform.width / 2);
+                    ball.x = newX + (platform.width / 2);
                 }
             }
         }
