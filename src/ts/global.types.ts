@@ -4,7 +4,6 @@ export interface PrimitiveType {
     x: number,
     y: number,
     type: string,
-    shape: string,
     color: string,
 };
 

@@ -5,8 +5,7 @@ export default class Primitive implements PrimitiveType {
     height: number;
     x: number;
     y: number;
-    type: string;
-    shape: string;
+    type: string;;
     color: string;
 
     constructor(params: PrimitiveType){
