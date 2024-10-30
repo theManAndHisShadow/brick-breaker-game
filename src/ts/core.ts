@@ -1,6 +1,7 @@
-import { getRandomFloat } from "./helpers.ts";
+import { getRandomFloat } from "./helpers";
+import { Ball, Bounds, Brick, Platform, BounceStatistics } from "./global.types";
 
-export function generateBricks (startX, startY, endX, endY, brickSize = 20) {
+export function generateBricks (startX: number, startY: number, endX: number, endY: number, brickSize:number = 20): Brick[] {
     const offset = 1;
     const columns = Math.floor((endX - startX) / (brickSize + offset));
     const rows = Math.floor((endY - startY) / (brickSize + offset));
@@ -17,15 +18,18 @@ export function generateBricks (startX, startY, endX, endY, brickSize = 20) {
                 color: 'blue',
                 type: 'brick',
                 health: 1,
-            });
+            } as Brick);
         }
     }
+
+    console.log(generatedArray);
+
     return generatedArray;
 };
 
 
 
-export function changeAngle(ball, angleOffset) {
+export function changeAngle(ball: Ball, angleOffset: number) {
     // Convert the current speed to polar coordinates
     let speed = Math.sqrt(ball.dx * ball.dx + ball.dy * ball.dy);
     let angle = Math.atan2(ball.dy, ball.dx);
@@ -40,12 +44,12 @@ export function changeAngle(ball, angleOffset) {
 
 
 
-export function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersection = () => {}) {
+export function checkIntersections(ball: Ball, platform: Platform, bricks: Brick[], bounds: Bounds, callbackOnIntersection = (bounces: BounceStatistics) => {}) {
     
-    let ballTop = ball.cy - ball.size;
-    let ballBottom = ball.cy + ball.size;
-    let ballLeft = ball.cx - ball.size;
-    let ballRight = ball.cx + ball.size;
+    let ballTop = ball.y - ball.width;
+    let ballBottom = ball.y + ball.width;
+    let ballLeft = ball.x - ball.width;
+    let ballRight = ball.x + ball.width;
 
     let platformTop = platform.y;
     let platformBottom = platform.y + platform.height;
@@ -57,12 +61,12 @@ export function checkIntersections(ball, platform, bricks, bounds, callbackOnInt
 
     for (let brick of bricks) {
         if (brick.health > 0) {
-            const closestX = Math.max(brick.x, Math.min(ball.cx, brick.x + brick.width));
-            const closestY = Math.max(brick.y, Math.min(ball.cy, brick.y + brick.height));
-            const distanceX = ball.cx - closestX;
-            const distanceY = ball.cy - closestY;
+            const closestX = Math.max(brick.x, Math.min(ball.x, brick.x + brick.width));
+            const closestY = Math.max(brick.y, Math.min(ball.y, brick.y + brick.height));
+            const distanceX = ball.x - closestX;
+            const distanceY = ball.y - closestY;
 
-            if ((distanceX * distanceX + distanceY * distanceY) <= (ball.size * ball.size)) {
+            if ((distanceX * distanceX + distanceY * distanceY) <= (ball.width * ball.width)) {
                 brick.color = 'rgba(255, 255, 255, 0.05)';
                 brick.health = 0;
 
@@ -85,7 +89,7 @@ export function checkIntersections(ball, platform, bricks, bounds, callbackOnInt
 
     if (!ball.isLinkedToPlatform) {
         if (ballBottom >= platformTop && ((ballLeft <= platformRight) && (ballRight >= platformLeft))) {
-            ball.cy = platformTop - ball.size;
+            ball.y = platformTop - ball.width;
             calculateBounce(ball, platform);
             changeAngle(ball, angleOffset); // Apply random angle only on platform bounce
             ball.bounces.fromPlatform += 1;
@@ -94,10 +98,10 @@ export function checkIntersections(ball, platform, bricks, bounds, callbackOnInt
     }
 
     // depending on the bounce location - change the y or x position
-    if (ballTop <= bounds.top) ball.cy = bounds.top + ball.size;
-    if (ballBottom >= bounds.bottom) ball.cy = bounds.bottom - ball.size;
-    if (ballLeft < bounds.left) ball.cx = bounds.left + ball.size;
-    if (ballRight >= bounds.right) ball.cx = bounds.right - ball.size;
+    if (ballTop <= bounds.top) ball.y = bounds.top + ball.width;
+    if (ballBottom >= bounds.bottom) ball.y = bounds.bottom - ball.width;
+    if (ballLeft < bounds.left) ball.x = bounds.left + ball.width;
+    if (ballRight >= bounds.right) ball.x = bounds.right - ball.width;
 
     // implement vertical bounce delta component (y velocity)
     if (ballTop <= bounds.top || ballBottom >= bounds.bottom) ball.dy *= -1;
@@ -115,9 +119,9 @@ export function checkIntersections(ball, platform, bricks, bounds, callbackOnInt
 
 
 
-export function calculateBounce (ball, platform) {
+export function calculateBounce (ball: Ball, platform: Platform) {
     const platformCenterX = platform.x + (platform.width / 2);
-    const offsetX = ball.cx - platformCenterX;
+    const offsetX = ball.x - platformCenterX;
     const platformHalfWidth = platform.width / 2;
     const relativeIntersectX = offsetX / platformHalfWidth;
 
@@ -132,12 +136,12 @@ export function calculateBounce (ball, platform) {
 
     
 
-export function calcBallNextPos (ball) {
+export function calcBallNextPos (ball: Ball) {
     let { dx, dy } = ball;
 
     if (dx !== 0 || dy !== 0) {
         // updating pos of ball
-        ball.cx += dx;
-        ball.cy += dy;
+        ball.x += dx;
+        ball.y += dy;
     }
 }
