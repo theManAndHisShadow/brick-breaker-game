@@ -64,6 +64,7 @@ export interface Screen {
     width: number,
     height: number,
     bounds: Bounds,
+    background: 'black' | string,
     clear():void,
     drawBackground(): void,
     drawBoundary(): void,
