@@ -22,8 +22,6 @@ export function generateBricks (startX: number, startY: number, endX: number, en
         }
     }
 
-    console.log(generatedArray);
-
     return generatedArray;
 };
 
