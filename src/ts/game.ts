@@ -1,16 +1,16 @@
 import { generateBricks, checkIntersections, calcBallNextPos } from "./core";
-import { Ball, BrickGrid, Game, GameObjects, Screen } from "./global.types.js";
+import { BallType, BrickGridType, GameType, GameObjectsType, ScreenType } from "./global.types.js";
 
 interface GameParams {
-    bricksGridPos: BrickGrid,
-    screen: Screen,
+    bricksGridPos: BrickGridType,
+    screen: ScreenType,
     onBrickBreak: any,
 }
 
 export default function getGame(params: GameParams){
     let score = 0;
     
-    const objects: GameObjects = {
+    const objects: GameObjectsType = {
         platform: {
             width: 100,
             height: 8,
@@ -54,7 +54,7 @@ export default function getGame(params: GameParams){
     
     objects.all = [objects.platform, objects.ball, ...objects.bricks];
 
-    const GameObject: Game = {
+    const GameObject: GameType = {
         score: score,
         objects: objects,
         render: () => {
@@ -75,7 +75,7 @@ export default function getGame(params: GameParams){
                     context.fillStyle = color;
                     context.fillRect(x, y, width, height);
                 } else if (shape === 'circle') {
-                    let { x, y, width, color, isLinkedToPlatform } = object as Ball;
+                    let { x, y, width, color, isLinkedToPlatform } = object as BallType;
         
                     context.beginPath();
                     context.arc(x, y, width, 0, 2 * Math.PI, false);

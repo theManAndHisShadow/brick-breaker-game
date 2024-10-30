@@ -2,10 +2,10 @@ import getScreen from "./screen";
 import getUI from "./ui";
 import getGame from "./game";
 
-import { Screen, UI, Game, BounceStatistics } from "./global.types";
+import { ScreenType, UIType, GameType, BounceStatisticsType } from "./global.types";
 
 document.addEventListener('DOMContentLoaded', () => {
-    const Screen: Screen = getScreen({
+    const Screen: ScreenType = getScreen({
         width: 800,
         height: 500,
         background: 'black',
@@ -17,12 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    const UI: UI = getUI({
+    const UI: UIType = getUI({
         screen: Screen,
         fontSize: 16,
     });
 
-    const Game: Game = getGame({
+    const Game: GameType = getGame({
         screen: Screen,
         bricksGridPos: {
             startX: 0 + (Screen.bounds.padding * 8),            // start x
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             endY: 300 + (Screen.bounds.padding * 2)             // end y
         },
 
-        onBrickBreak: (bounces: BounceStatistics) => {
+        onBrickBreak: (bounces: BounceStatisticsType) => {
             UI.getElementById('scores').updateValue(bounces.fromBrick * 10);
         }
     });

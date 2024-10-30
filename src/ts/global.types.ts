@@ -1,4 +1,4 @@
-export interface PrimitiveObject {
+export interface PrimitiveType {
     width: number,
     height: number,
     x: number,
@@ -8,36 +8,36 @@ export interface PrimitiveObject {
     color: string,
 };
 
-export interface BounceStatistics {
+export interface BounceStatisticsType {
     lastBounceFrom: boolean | string,
     fromBrick: number,
     fromPlatform: number,
     fromBoundary: number,
 }
 
-export interface Ball extends PrimitiveObject {
+export interface BallType extends PrimitiveType {
     dx: number,
     dy: number,
     angle: number,
     isLinkedToPlatform: boolean,
     isWaitingStart: boolean,
-    bounces: BounceStatistics,
+    bounces: BounceStatisticsType,
 };
 
-export interface Platform extends PrimitiveObject {};
+export interface PlatformType extends PrimitiveType {};
 
-export interface Brick extends PrimitiveObject {
+export interface BrickType extends PrimitiveType {
     health: number,
 };
 
-export interface BrickGrid {
+export interface BrickGridType {
     startX: number, 
     startY: number, 
     endX: number, 
     endY: number
 }
 
-export interface Bounds {
+export interface BoundsType {
     padding: number,
     top: number
     left: number,
@@ -45,25 +45,25 @@ export interface Bounds {
     bottom: number,
 };
 
-export interface GameObjects {
-    platform: Platform,
-    ball: Ball,
-    bricks: Brick[],
-    all: (Platform | Ball | Brick)[],
+export interface GameObjectsType {
+    platform: PlatformType,
+    ball: BallType,
+    bricks: BrickType[],
+    all: (PlatformType | BallType | BrickType)[],
 }
 
-export interface Game {
+export interface GameType {
     score: number,
-    objects: GameObjects,
+    objects: GameObjectsType,
     render (): void,
 };
 
-export interface Screen {
+export interface ScreenType {
     body: HTMLCanvasElement,
     context: CanvasRenderingContext2D,
     width: number,
     height: number,
-    bounds: Bounds,
+    bounds: BoundsType,
     background: 'black' | string,
     clear():void,
     drawBackground(): void,
@@ -71,7 +71,7 @@ export interface Screen {
 };
 
 
-export interface UIElementBoundingRect {
+export interface UIElementBoundingRectType {
     topLeft:     {x: number, y: number},
     bottomLeft:  {x: number, y: number},
     topRight:    {x: number, y: number},
@@ -81,13 +81,13 @@ export interface UIElementBoundingRect {
 export interface UIElement {
     id: string,
     label: string,
-    rect: UIElementBoundingRect,
+    rect: UIElementBoundingRectType,
     value: any,
     updateValue(newVale: any): void,
     render(): void,
 };
 
-export interface UI {
+export interface UIType {
     items: UIElement[],
     getElementById(id: string): UIElement,
     render(): void,

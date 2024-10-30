@@ -1,7 +1,7 @@
 import { getRandomFloat } from "./helpers";
-import { Ball, Bounds, Brick, Platform, BounceStatistics } from "./global.types";
+import { BallType, BoundsType, BrickType, PlatformType, BounceStatisticsType } from "./global.types";
 
-export function generateBricks (startX: number, startY: number, endX: number, endY: number, brickSize:number = 20): Brick[] {
+export function generateBricks (startX: number, startY: number, endX: number, endY: number, brickSize:number = 20): BrickType[] {
     const offset = 1;
     const columns = Math.floor((endX - startX) / (brickSize + offset));
     const rows = Math.floor((endY - startY) / (brickSize + offset));
@@ -18,7 +18,7 @@ export function generateBricks (startX: number, startY: number, endX: number, en
                 color: 'blue',
                 type: 'brick',
                 health: 1,
-            } as Brick);
+            } as BrickType);
         }
     }
 
@@ -27,7 +27,7 @@ export function generateBricks (startX: number, startY: number, endX: number, en
 
 
 
-export function changeAngle(ball: Ball, angleOffset: number) {
+export function changeAngle(ball: BallType, angleOffset: number) {
     // Convert the current speed to polar coordinates
     let speed = Math.sqrt(ball.dx * ball.dx + ball.dy * ball.dy);
     let angle = Math.atan2(ball.dy, ball.dx);
@@ -42,7 +42,7 @@ export function changeAngle(ball: Ball, angleOffset: number) {
 
 
 
-export function checkIntersections(ball: Ball, platform: Platform, bricks: Brick[], bounds: Bounds, callbackOnIntersection = (bounces: BounceStatistics) => {}) {
+export function checkIntersections(ball: BallType, platform: PlatformType, bricks: BrickType[], bounds: BoundsType, callbackOnIntersection = (bounces: BounceStatisticsType) => {}) {
     
     let ballTop = ball.y - ball.width;
     let ballBottom = ball.y + ball.width;
@@ -117,7 +117,7 @@ export function checkIntersections(ball: Ball, platform: Platform, bricks: Brick
 
 
 
-export function calculateBounce (ball: Ball, platform: Platform) {
+export function calculateBounce (ball: BallType, platform: PlatformType) {
     const platformCenterX = platform.x + (platform.width / 2);
     const offsetX = ball.x - platformCenterX;
     const platformHalfWidth = platform.width / 2;
@@ -134,7 +134,7 @@ export function calculateBounce (ball: Ball, platform: Platform) {
 
     
 
-export function calcBallNextPos (ball: Ball) {
+export function calcBallNextPos (ball: BallType) {
     let { dx, dy } = ball;
 
     if (dx !== 0 || dy !== 0) {

@@ -1,7 +1,7 @@
-import { Screen, UI, UIElement, UIElementBoundingRect } from "./global.types";
+import { ScreenType, UIType, UIElement, UIElementBoundingRectType } from "./global.types";
 
 interface UIparams {
-    screen: Screen, 
+    screen: ScreenType, 
     fontSize?: number, 
     fontName?: string, 
     lineSpacing?: number,
@@ -10,7 +10,7 @@ interface UIparams {
 };
 
 
-export default function getUI(params: UIparams): UI {
+export default function getUI(params: UIparams): UIType {
     // Set default values
     const defaultParams: UIparams = {
         screen: params.screen, 
@@ -31,7 +31,7 @@ export default function getUI(params: UIparams): UI {
         context.font = `${params.fontSize}px ${params.fontName}`;  
     
         let value = 0;
-        const rect: UIElementBoundingRect = {
+        const rect: UIElementBoundingRectType = {
             topLeft:     {x: 0, y: 0},
             bottomLeft:  {x: 0, y: 0},
             topRight:    {x: 0, y: 0},

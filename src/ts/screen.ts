@@ -1,4 +1,4 @@
-import { Screen, Bounds } from "./global.types"
+import { ScreenType, BoundsType } from "./global.types"
 
 interface ScreenParams {
     width: number, 
@@ -14,7 +14,7 @@ interface ScreenParams {
 export default function getScreen(params: ScreenParams) {
     const canvas: HTMLCanvasElement = document.querySelector(params.selector);
     const context: CanvasRenderingContext2D = canvas.getContext('2d');
-    const boundsObject: Bounds = {
+    const boundsObject: BoundsType = {
         padding: params.boundaryPadding,
 
         left: 0 + params.boundaryPadding,
@@ -37,7 +37,7 @@ export default function getScreen(params: ScreenParams) {
         });
     }
 
-    const ScreenObject: Screen = {
+    const ScreenObject: ScreenType = {
         body: canvas,
         context: context,
         width: params.width,
