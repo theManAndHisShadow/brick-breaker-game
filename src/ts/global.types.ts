@@ -89,6 +89,6 @@ export interface UIElement {
 
 export interface UI {
     items: UIElement[],
-    getElementByid(id: string): UIElement,
+    getElementById(id: string): UIElement,
     render(): void,
 };
