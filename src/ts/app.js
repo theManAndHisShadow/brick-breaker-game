@@ -1,4 +1,4 @@
-import getScreen from "./screen.js";
+import getScreen from "./screen";
 import getUI from "./ui.js";
 import getGame from "./game";
 
@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const Screen = getScreen({
         width: 800,
         height: 500,
+        background: 'black',
         selector: 'div[data-game-id="brick-breaker"] canvas',
         boundaryPadding: 10,
         boundsColor: 'red',
