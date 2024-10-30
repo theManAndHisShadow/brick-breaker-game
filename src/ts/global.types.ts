@@ -69,3 +69,26 @@ export interface Screen {
     drawBackground(): void,
     drawBoundary(): void,
 };
+
+
+export interface UIElementBoundingRect {
+    topLeft:     {x: number, y: number},
+    bottomLeft:  {x: number, y: number},
+    topRight:    {x: number, y: number},
+    bottomRight: {x: number, y: number},
+};
+
+export interface UIElement {
+    id: string,
+    label: string,
+    rect: UIElementBoundingRect,
+    value: any,
+    updateValue(newVale: any): void,
+    render(): void,
+};
+
+export interface UI {
+    items: UIElement[],
+    getElementByid(id: string): UIElement,
+    render(): void,
+};
