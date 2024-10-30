@@ -1,5 +1,5 @@
 import getScreen from "./screen";
-import getUI from "./ui.js";
+import getUI from "./ui";
 import getGame from "./game";
 
 document.addEventListener('DOMContentLoaded', () => {
