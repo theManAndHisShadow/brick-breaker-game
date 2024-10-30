@@ -72,9 +72,15 @@ function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersecti
 
                 // Mirror and add a random angle
                 ball.dx *= -1;
-                ball.dy *= -1;
-                changeAngle(ball, angleOffset); 
+
+                // adding zig zag effect when ball bounces from boundary
+                if(ball.bounces.lastBounceFrom !== 'bound') {
+                    ball.dy *= -1;
+                }
+
+                // changeAngle(ball, angleOffset); 
                 ball.bounces.fromBrick += 1;
+                ball.bounces.lastBounceFrom = brick.type;
 
                 callbackOnIntersection(ball.bounces);
             }
@@ -85,36 +91,39 @@ function checkIntersections(ball, platform, bricks, bounds, callbackOnIntersecti
         if (ballBottom >= platformTop && ((ballLeft <= platformRight) && (ballRight >= platformLeft))) {
             ball.cy = platformTop - ball.size;
             calculateBounce(ball, platform);
-            changeAngle(ball, angleOffset);
+            changeAngle(ball, angleOffset); // Apply random angle only on platform bounce
             ball.bounces.fromPlatform += 1;
+            ball.bounces.lastBounceFrom = platform.type;
         }
     }
 
+    // Bounce on boundaries without random angle
     if (ballTop <= bounds.top) {
         ball.dy *= -1;
         ball.cy = bounds.top + ball.size;
-        changeAngle(ball, angleOffset);
         ball.bounces.fromBoundary += 1;
+        ball.bounces.lastBounceFrom = 'bound';
     }
 
     if (ballBottom >= bounds.bottom) {
         ball.dy *= -1;
         ball.cy = bounds.bottom - ball.size;
         ball.bounces.fromBoundary += 1;
+        ball.bounces.lastBounceFrom = 'bound';
     }
 
     if (ballLeft < bounds.left) {
         ball.dx *= -1;
         ball.cx = bounds.left + ball.size;
-        changeAngle(ball, angleOffset);
         ball.bounces.fromBoundary += 1;
+        ball.bounces.lastBounceFrom = 'bound';
     }
 
     if (ballRight >= bounds.right) {
         ball.dx *= -1;
         ball.cx = bounds.right - ball.size;
-        changeAngle(ball, angleOffset);
         ball.bounces.fromBoundary += 1;
+        ball.bounces.lastBounceFrom = 'bound';
     }
 }
 
