@@ -2,30 +2,6 @@ import { getRandomFloat } from "./helpers";
 import { BallType, BoundsType, BrickType, PlatformType, BounceStatisticsType } from "./global.types";
 import Brick from "./classes/Brick";
 
-export function generateBricks (startX: number, startY: number, endX: number, endY: number, brickSize:number = 20): BrickType[] {
-    const offset = 1;
-    const columns = Math.floor((endX - startX) / (brickSize + offset));
-    const rows = Math.floor((endY - startY) / (brickSize + offset));
-    const generatedArray = [];
-
-    for (let i = 0; i < columns; i++) {
-        for (let j = 0; j < rows; j++) {
-            generatedArray.push(new Brick({
-                width: brickSize,
-                height: brickSize,
-                x: startX + i * (brickSize + offset),
-                y: startY + j * (brickSize + offset),
-                color: 'blue',
-                type: 'brick',
-                health: 1,
-            }));
-        }
-    }
-
-    return generatedArray;
-};
-
-
 
 export function changeAngle(ball: BallType, angleOffset: number) {
     // Convert the current speed to polar coordinates
