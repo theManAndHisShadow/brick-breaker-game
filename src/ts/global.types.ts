@@ -53,7 +53,11 @@ export interface GameObjectsType {
 
 export interface GameType {
     score: number,
+    screen: ScreenType,
     objects: GameObjectsType,
+    onBrickBreak: Function,
+    run(): void,
+    processIntersections(): void,
     render (): void,
 };
 
@@ -77,17 +81,24 @@ export interface UIElementBoundingRectType {
     bottomRight: {x: number, y: number},
 };
 
-export interface UIElement {
+export interface UIElementType {
     id: string,
     label: string,
     rect: UIElementBoundingRectType,
     value: any,
+    fontSize: number,          
+    fontName: string, 
+    lineSpacing: number,        
+    labelColor: string,   
+    valueColor: string,   
     updateValue(newVale: any): void,
     render(): void,
 };
 
 export interface UIType {
-    items: UIElement[],
-    getElementById(id: string): UIElement,
+    items: UIElementType[],
+    screen: ScreenType,
+    createElement({id, label, x, y}: {id: string, label: string, x: number, y: number}): UIElementType
+    getElementById(id: string): UIElementType,
     render(): void,
 };
