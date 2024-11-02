@@ -4,9 +4,6 @@ import Platform from "./Platform";
 import Ball from "./Ball";
 import Brick from "./Brick";
 
-// temp
-import { calculateBounce, calcBallNextPos, changeAngle } from "../core";
-
 interface GameParams {
     bricksGridPos: BrickGridType,
     screen: ScreenType,
@@ -36,19 +33,8 @@ export default class Game implements GameType {
                 color: 'white',
                 x: params.screen.width / 2,
                 y: params.screen.height - 75,
-                dx: 0,
-                dy: 0,
                 width: 6,
                 height: 6,
-                angle: 90,
-                isLinkedToPlatform: true,
-                isWaitingStart: true,
-                bounces: {
-                    lastBounceFrom: null,
-                    fromBrick: 0,
-                    fromPlatform: 0,
-                    fromBoundary: 0,
-                },
             }),
 
             bricks: this.generateBricksGrid(
@@ -140,8 +126,8 @@ export default class Game implements GameType {
         if (!ball.isLinkedToPlatform) {
             if (ballBottom >= platformTop && ((ballLeft <= platformRight) && (ballRight >= platformLeft))) {
                 ball.y = platformTop - ball.width;
-                calculateBounce(ball, platform);
-                changeAngle(ball, angleOffset); // Apply random angle only on platform bounce
+                ball.calculateBounceWith(platform);
+                ball.calculateAngleChange(angleOffset); // Apply random angle only on platform bounce
                 ball.bounces.fromPlatform += 1;
                 ball.bounces.lastBounceFrom = platform.type;
             }
@@ -167,7 +153,7 @@ export default class Game implements GameType {
     }
 
     run(): void {
-        calcBallNextPos(this.objects.ball);
+        this.objects.ball.calculateNextPosition();
     }
 
     render(): void {
