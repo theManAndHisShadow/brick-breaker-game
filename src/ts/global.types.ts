@@ -21,6 +21,9 @@ export interface BallType extends PrimitiveType {
     isLinkedToPlatform: boolean,
     isWaitingStart: boolean,
     bounces: BounceStatisticsType,
+    calculateAngleChange(angleOffset: number): void,
+    calculateBounceWith(bounceTarget: PlatformType | BrickType): void,
+    calculateNextPosition(): void;
 };
 
 export interface PlatformType extends PrimitiveType {};
