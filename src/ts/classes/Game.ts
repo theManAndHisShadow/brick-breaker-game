@@ -148,19 +148,19 @@ export default class Game implements GameType {
         }
 
         // depending on the bounce location - change the y or x position
-        if (ballTop <= bounds.top) ball.y = bounds.top + ball.width;
-        if (ballBottom >= bounds.bottom) ball.y = bounds.bottom - ball.width;
-        if (ballLeft < bounds.left) ball.x = bounds.left + ball.width;
-        if (ballRight >= bounds.right) ball.x = bounds.right - ball.width;
+        if (ballTop <= bounds.rect.top) ball.y = bounds.rect.top + ball.width;
+        if (ballBottom >= bounds.rect.bottom) ball.y = bounds.rect.bottom - ball.width;
+        if (ballLeft < bounds.rect.left) ball.x = bounds.rect.left + ball.width;
+        if (ballRight >= bounds.rect.right) ball.x = bounds.rect.right - ball.width;
 
         // implement vertical bounce delta component (y velocity)
-        if (ballTop <= bounds.top || ballBottom >= bounds.bottom) ball.dy *= -1;
+        if (ballTop <= bounds.rect.top || ballBottom >= bounds.rect.bottom) ball.dy *= -1;
 
         // implement horizontal bounce delta component (x velocity)
-        if (ballLeft < bounds.left || ballRight >= bounds.right) ball.dx *= -1;
+        if (ballLeft < bounds.rect.left || ballRight >= bounds.rect.right) ball.dx *= -1;
 
         // If the bounce is from the border - update the counter of bounces from the borders and indicate that the last bounce was from the border
-        if (ballTop <= bounds.top || ballBottom >= bounds.bottom || ballLeft < bounds.left || ballRight >= bounds.right) {
+        if (ballTop <= bounds.rect.top || ballBottom >= bounds.rect.bottom || ballLeft < bounds.rect.left || ballRight >= bounds.rect.right) {
             ball.bounces.fromBoundary += 1;
             ball.bounces.lastBounceFrom = 'bound';
         }
