@@ -38,10 +38,14 @@ export interface BrickGridType {
 
 export interface BoundsType {
     padding: number,
-    top: number
-    left: number,
-    right: number,
-    bottom: number,
+    color: string,
+    thickness: number,
+    rect: {
+        top: number
+        left: number,
+        right: number,
+        bottom: number,
+    },
 };
 
 export interface GameObjectsType {
