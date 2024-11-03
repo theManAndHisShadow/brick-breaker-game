@@ -1,4 +1,4 @@
-import { PrimitiveType } from "../global.types";
+import { PrimitiveParams, PrimitiveType, ScreenType } from "../global.types";
 
 export default class Primitive implements PrimitiveType {
     width: number;
@@ -8,7 +8,11 @@ export default class Primitive implements PrimitiveType {
     type: string;
     color: string;
 
-    constructor(params: PrimitiveType){
+    constructor(params: PrimitiveParams){
         Object.assign(this, params);
+    }
+
+    renderAt(screenReference: ScreenType): void {
+        // empty proto method...
     }
 }

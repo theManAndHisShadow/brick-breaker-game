@@ -1,15 +1,6 @@
 import Primitive from "./Primitive";
-import { BounceStatisticsType, BallType, PlatformType, BrickType, TracerType } from "../global.types";
+import { BounceStatisticsType, BallType, PlatformType, BrickType, TracerType, ScreenType, PrimitiveParams } from "../global.types";
 import Tracer from "./Tracer";
-
-interface BallParams {
-    width: number,
-    height: number,
-    color: string,
-    x: number,
-    y: number,
-    type: string,
-}
 
 export default class Ball extends Primitive implements BallType {
     dx: number;
@@ -20,9 +11,8 @@ export default class Ball extends Primitive implements BallType {
     bounces: BounceStatisticsType;
     trace: TracerType;
 
-    constructor(params: BallParams){
+    constructor(params: PrimitiveParams){
         const defaultParams = {
-                type: 'ball',
                 dx: 0,
                 dy: 0,
                 angle: 90,
@@ -85,5 +75,18 @@ export default class Ball extends Primitive implements BallType {
 
             this.trace.add({x: this.x, y: this.y});
         }
+    }
+
+    renderAt(screenReference: ScreenType): void {
+        const { context } = screenReference;
+        let { x, y, width, color, isLinkedToPlatform } = this;
+
+        context.beginPath();
+        context.arc(x, y, width, 0, 2 * Math.PI, false);
+        context.fillStyle = isLinkedToPlatform === true ? 'green' : color;
+        context.fill();
+        context.closePath();
+
+        this.trace.renderAt(screenReference);
     }
 }
