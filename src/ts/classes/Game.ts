@@ -1,4 +1,4 @@
-import { getRandomFloat } from "../helpers";
+import { getRandomFloat, getRandomInt } from "../helpers";
 import { ScreenType, BallType, BrickType, BrickGridType, GameObjectsType, GameType } from "../global.types";
 import Platform from "./Platform";
 import Ball from "./Ball";
@@ -60,14 +60,19 @@ export default class Game implements GameType {
 
         for (let i = 0; i < columns; i++) {
             for (let j = 0; j < rows; j++) {
-                generatedArray.push(new Brick({
+                let health = getRandomInt(1, 5);
+                let brick = new Brick({
                     width: brickSize,
                     height: brickSize,
                     x: startX + i * (brickSize + offset),
                     y: startY + j * (brickSize + offset),
-                    color: 'blue',
-                    health: 1,
-                }));
+                    health: health,
+                    color: 'rgba(255, 255, 255, 1)',
+                });
+
+                brick.color = brick.getColorBasedOnHealth(health);
+
+                generatedArray.push(brick);
             }
         }
 
@@ -100,8 +105,7 @@ export default class Game implements GameType {
                 const distanceY = ball.y - closestY;
 
                 if ((distanceX * distanceX + distanceY * distanceY) <= (ball.width * ball.width)) {
-                    brick.color = 'rgba(255, 255, 255, 0.05)';
-                    brick.health = 0;
+                    brick.updateHealth(brick.health - 1);
 
                     // Mirror and add a random angle
                     ball.dx *= -1;
