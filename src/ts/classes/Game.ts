@@ -52,7 +52,7 @@ export default class Game implements GameType {
         this.score = 0;
     }
 
-    protected generateBricksGrid(startX: number, startY: number, endX: number, endY: number, brickSize:number = 20): BrickType[] {
+    protected generateBricksGrid(startX: number, startY: number, endX: number, endY: number, brickSize:number = 30): BrickType[] {
         const offset = 1;
         const columns = Math.floor((endX - startX) / (brickSize + offset));
         const rows = Math.floor((endY - startY) / (brickSize + offset));
@@ -60,7 +60,7 @@ export default class Game implements GameType {
 
         for (let i = 0; i < columns; i++) {
             for (let j = 0; j < rows; j++) {
-                let health = getRandomInt(1, 5);
+                let health = getRandomInt(1, 1);
                 let brick = new Brick({
                     width: brickSize,
                     height: brickSize,
@@ -68,6 +68,7 @@ export default class Game implements GameType {
                     y: startY + j * (brickSize + offset),
                     health: health,
                     color: 'rgba(255, 255, 255, 1)',
+                    texture: './cobblestone.png',
                 });
 
                 brick.color = brick.getColorBasedOnHealth(health);
