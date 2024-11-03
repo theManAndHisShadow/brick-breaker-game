@@ -3,9 +3,19 @@ export interface PrimitiveType {
     height: number,
     x: number,
     y: number,
-    color: string,
+    color?: string,
+
     renderAt(screenReference: ScreenType): void,
 };
+
+export interface TextureType {
+    loaded: boolean,
+    texture: HTMLImageElement,
+    url: string,
+    parent: PrimitiveType | BallType | BrickType | PlatformType,
+    load(): void,
+    renderAt(screenReference: ScreenType): void,
+}
 
 export interface PrimitiveParams {
     width: number;
@@ -54,6 +64,7 @@ export interface PlatformType extends PrimitiveType {};
 
 export interface BrickType extends PrimitiveType {
     health: number,
+    texture: TextureType,
     getColorBasedOnHealth(health: number): string,
     updateHealth(health: number): void,
 };
