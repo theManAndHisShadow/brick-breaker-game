@@ -26,10 +26,8 @@ export default class Game implements GameType {
                 x: (params.screen.width / 2) - (100 / 2),
                 y: params.screen.height - 69,
                 color: 'rgb(115, 115, 115)',
-                type: 'platform',
             }),
             ball: new Ball({
-                type: 'ball',
                 color: 'white',
                 x: params.screen.width / 2,
                 y: params.screen.height - 75,
@@ -68,7 +66,6 @@ export default class Game implements GameType {
                     x: startX + i * (brickSize + offset),
                     y: startY + j * (brickSize + offset),
                     color: 'blue',
-                    type: 'brick',
                     health: 1,
                 }));
             }
@@ -116,7 +113,7 @@ export default class Game implements GameType {
 
                     // changeAngle(ball, angleOffset); 
                     ball.bounces.fromBrick += 1;
-                    ball.bounces.lastBounceFrom = brick.type;
+                    ball.bounces.lastBounceFrom = 'brick';
 
                     this.onBrickBreak(ball.bounces);
                 }
@@ -129,7 +126,7 @@ export default class Game implements GameType {
                 ball.calculateBounceWith(platform);
                 ball.calculateAngleChange(angleOffset); // Apply random angle only on platform bounce
                 ball.bounces.fromPlatform += 1;
-                ball.bounces.lastBounceFrom = platform.type;
+                ball.bounces.lastBounceFrom = 'platform';
             }
         }
 
@@ -157,25 +154,8 @@ export default class Game implements GameType {
     }
 
     render(): void {
-        let { context } = this.screen;
-
         for (let object of this.objects.all) {
-            if (object instanceof Brick || object instanceof Platform) {
-                let { x, y, width, height, color } = object;
-    
-                context.fillStyle = color;
-                context.fillRect(x, y, width, height);
-            } else if(object instanceof Ball) {
-                let { x, y, width, color, isLinkedToPlatform } = object as BallType;
-    
-                context.beginPath();
-                context.arc(x, y, width, 0, 2 * Math.PI, false);
-                context.fillStyle = isLinkedToPlatform === true ? 'green' : color;
-                context.fill();
-                context.closePath();
-
-                object.trace.renderAt(this.screen);
-            }
+            object.renderAt(this.screen);
         }
     }
 }
