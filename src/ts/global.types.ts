@@ -3,9 +3,17 @@ export interface PrimitiveType {
     height: number,
     x: number,
     y: number,
-    type: string,
     color: string,
+    renderAt(screenReference: ScreenType): void,
 };
+
+export interface PrimitiveParams {
+    width: number;
+    height: number;
+    x: number;
+    y: number;
+    color: string;
+}
 
 export interface BounceStatisticsType {
     lastBounceFrom: boolean | string,
