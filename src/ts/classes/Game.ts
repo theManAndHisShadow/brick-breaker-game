@@ -173,6 +173,8 @@ export default class Game implements GameType {
                 context.fillStyle = isLinkedToPlatform === true ? 'green' : color;
                 context.fill();
                 context.closePath();
+
+                object.trace.renderAt(this.screen);
             }
         }
     }

@@ -14,6 +14,21 @@ export interface BounceStatisticsType {
     fromBoundary: number,
 }
 
+export interface TracerItem {
+    x: number,
+    y: number,
+};
+
+export interface TracerType {
+    memoryLimit: number,
+    trainType: string,
+    color: string,
+    getLastPoint(): TracerItem | boolean,
+    getlength(): number,
+    add(point: TracerItem): void,
+    renderAt(screenReference: ScreenType): void,
+}
+
 export interface BallType extends PrimitiveType {
     dx: number,
     dy: number,
@@ -21,9 +36,10 @@ export interface BallType extends PrimitiveType {
     isLinkedToPlatform: boolean,
     isWaitingStart: boolean,
     bounces: BounceStatisticsType,
+    trace: TracerType,
     calculateAngleChange(angleOffset: number): void,
     calculateBounceWith(bounceTarget: PlatformType | BrickType): void,
-    calculateNextPosition(): void;
+    calculateNextPosition(): void,
 };
 
 export interface PlatformType extends PrimitiveType {};

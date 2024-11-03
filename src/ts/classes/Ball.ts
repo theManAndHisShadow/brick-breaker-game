@@ -1,5 +1,6 @@
 import Primitive from "./Primitive";
-import { BounceStatisticsType, BallType, PlatformType, BrickType } from "../global.types";
+import { BounceStatisticsType, BallType, PlatformType, BrickType, TracerType } from "../global.types";
+import Tracer from "./Tracer";
 
 interface BallParams {
     width: number,
@@ -17,6 +18,7 @@ export default class Ball extends Primitive implements BallType {
     isLinkedToPlatform: boolean;
     isWaitingStart: boolean;
     bounces: BounceStatisticsType;
+    trace: TracerType;
 
     constructor(params: BallParams){
         const defaultParams = {
@@ -24,6 +26,7 @@ export default class Ball extends Primitive implements BallType {
                 dx: 0,
                 dy: 0,
                 angle: 90,
+                trace: new Tracer({}),
                 isLinkedToPlatform: true,
                 isWaitingStart: true,
                 bounces: {
@@ -79,6 +82,8 @@ export default class Ball extends Primitive implements BallType {
             // updating pos of ball
             this.x += dx;
             this.y += dy;
+
+            this.trace.add({x: this.x, y: this.y});
         }
     }
 }
