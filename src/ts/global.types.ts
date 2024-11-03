@@ -54,6 +54,8 @@ export interface PlatformType extends PrimitiveType {};
 
 export interface BrickType extends PrimitiveType {
     health: number,
+    getColorBasedOnHealth(health: number): string,
+    updateHealth(health: number): void,
 };
 
 export interface BrickGridType {
