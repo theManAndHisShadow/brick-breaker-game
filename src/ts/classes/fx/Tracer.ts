@@ -1,5 +1,5 @@
-import { ScreenType, TracerItem, TracerType } from "../global.types";
-import { getArrayLast, changeColorOpacity } from "../helpers";
+import { ScreenType, TracerItem, TracerType } from "../../global.types";
+import { getArrayLast, changeColorOpacity } from "../../helpers";
 
 interface TracerParams {
     memoryLimit?: number,

@@ -1,8 +1,8 @@
 import { ScreenType, UIType, GameType, BounceStatisticsType } from "./global.types";
 
-import Screen from "./classes/Screen";
+import Screen from "./classes/core/Screen";
+import Game from "./classes/core/Game";
 import UI from "./classes/UI";
-import Game from "./classes/Game";
 
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,5 +1,5 @@
-import { ScreenType, BoundsType, CRTFilterType } from "../global.types";
-import CRTFilter from "./CRTFilter";
+import { ScreenType, BoundsType, CRTFilterType } from "../../global.types";
+import CRTFilter from "../fx/CRTFilter";
 
 interface ScreenParams {
     width: number, 

@@ -1,5 +1,5 @@
-import { changeColorOpacity, getRandomFloat, getRandomInt } from "../helpers";
-import { ScreenType, BallType, BrickType, BrickGridType, GameObjectsType, GameType } from "../global.types";
+import { changeColorOpacity, getRandomFloat, getRandomInt } from "../../helpers";
+import { ScreenType, BallType, BrickType, BrickGridType, GameObjectsType, GameType } from "../../global.types";
 import Platform from "./Platform";
 import Ball from "./Ball";
 import Brick from "./Brick";

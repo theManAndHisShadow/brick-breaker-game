@@ -1,6 +1,6 @@
 import Primitive from "./Primitive";
-import { BounceStatisticsType, BallType, PlatformType, BrickType, TracerType, ScreenType, PrimitiveParams } from "../global.types";
-import Tracer from "./Tracer";
+import { BounceStatisticsType, BallType, PlatformType, BrickType, TracerType, ScreenType, PrimitiveParams } from "../../global.types";
+import Tracer from "../fx/Tracer";
 
 export default class Ball extends Primitive implements BallType {
     dx: number;

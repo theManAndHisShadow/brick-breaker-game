@@ -1,4 +1,4 @@
-import { CRTFilterType } from "../global.types";
+import { CRTFilterType } from "../../global.types";
 
 interface CRTFilterParams {
     width: number,

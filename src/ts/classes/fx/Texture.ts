@@ -1,4 +1,4 @@
-import { BallType, BrickType, PlatformType, PrimitiveType, ScreenType, TextureType } from "../global.types";
+import { BallType, BrickType, PlatformType, PrimitiveType, ScreenType, TextureType } from "../../global.types";
 
 interface TextureParams {
     url: string,

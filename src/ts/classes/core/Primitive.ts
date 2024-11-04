@@ -1,4 +1,4 @@
-import { PrimitiveParams, PrimitiveType, ScreenType } from "../global.types";
+import { PrimitiveParams, PrimitiveType, ScreenType } from "../../global.types";
 
 export default class Primitive implements PrimitiveType {
     width: number;
