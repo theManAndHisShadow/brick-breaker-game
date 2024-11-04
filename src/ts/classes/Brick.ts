@@ -49,11 +49,13 @@ export default class Brick extends Primitive implements BrickType {
     }
 
     renderAt(screenReference: ScreenType): void {
-        const { context } = screenReference;
-        let { x, y, width, height, color } = this;
-    
-        context.fillStyle = color;
-        context.fillRect(x, y, width, height);
-        this.texture.renderAt(screenReference);
+        if(this.health > 0) {
+            const { context } = screenReference;
+            let { x, y, width, height, color } = this;
+
+            context.fillStyle = color;
+            context.fillRect(x, y, width, height);
+            // this.texture.renderAt(screenReference);
+        }
     }
 }
