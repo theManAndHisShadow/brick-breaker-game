@@ -1,5 +1,6 @@
 import { ScreenType, BoundsType, CRTFilterType } from "../../global.types";
 import CRTFilter from "../fx/CRTFilter";
+import { changeColorOpacity } from "../../helpers";
 
 interface ScreenParams {
     width: number, 
@@ -64,16 +65,39 @@ export default class Screen implements ScreenType {
     }
 
     drawBackground(): void {
-        this.context.fillStyle = this.background;
-        this.context.fillRect(0, 0, this.width, this.height);
+        const { context } = this;
+        const centerX = this.width / 2;
+        const centerY = this.height / 2;
+        const radius = this.width / 2;
+        
+        context.fillStyle = this.background;
+        context.fillRect(0, 0, this.width, this.height);
+
+        // Create a radial gradient for the gray spot
+        const gradient = context.createRadialGradient(centerX, centerY, radius * 0.1, centerX, centerY, radius);
+        gradient.addColorStop(0, 'rgba(150, 100, 100, 0.14)');   
+        gradient.addColorStop(1, 'rgba(120, 120, 120, 0)');     
+
+        // Draw a circle with a gradient
+        context.fillStyle = gradient;
+        context.beginPath();
+        context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+        context.fill();
+
     }
 
     renderCrtFilter(){
         this.context.drawImage(this.filter.layer, 0, 0);
     }
 
-    drawBoundary(): void {
+    drawBoundary(neonStyle: boolean): void {
         const { bounds } = this;
+
+        if(neonStyle === true) {
+            let gainedColor = changeColorOpacity(this.bounds.color, 1);
+            this.context.shadowBlur = 130;
+            this.context.shadowColor = gainedColor;
+        }
 
         this.context.strokeStyle = this.bounds.color;
         this.context.lineWidth = this.bounds.thickness;

@@ -125,7 +125,7 @@ export interface ScreenType {
     background: 'black' | string,
     clear():void,
     drawBackground(): void,
-    drawBoundary(): void,
+    drawBoundary(neonStyle: boolean): void,
     renderCrtFilter(): void,
 };
 

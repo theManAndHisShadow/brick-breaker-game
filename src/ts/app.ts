@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const screen: ScreenType = new Screen({
         width: 800,
         height: 500,
-        background: 'black',
+        background: 'rgba(12, 7, 7, 1)',
         selector: 'div[data-game-id="brick-breaker"] canvas',
         boundaryPadding: 10,
-        boundsColor: 'red',
+        boundsColor: 'rgba(255, 0, 0, 1)',
         boundsThickness: 2,
         hideMouse: true,
     });
@@ -32,13 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const game: GameType = new Game({
         screen: screen,
+        neonStyle: true,
         bricksGridPos: {
             startX: 0 + (screen.bounds.padding * 8),            // start x
             startY: 0 + (screen.bounds.padding * 8),            // start y
             endX: screen.width - (screen.bounds.padding * 8),   // end x
             endY: 300 + (screen.bounds.padding * 2)             // end y
         },
-        neonStyle: true,
 
         onBrickBreak: (bounces: BounceStatisticsType) => {
             ui.getElementById('scores').updateValue(bounces.fromBrick * 10);
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loop = () => {
         // Screen.clear();
         screen.drawBackground();
-        screen.drawBoundary();
+        screen.drawBoundary(game.neonStyle);
 
         // run - calc ball pos each frame
         game.run();
