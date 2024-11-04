@@ -23,8 +23,6 @@ export default class Texture implements TextureType {
         texture.onload = () => {
             this.texture = texture;
             this.loaded = true;
-
-            console.log('All OK!', texture);
         };
     }
 
