@@ -4,7 +4,7 @@ export interface PrimitiveType {
     x: number,
     y: number,
     color?: string,
-
+    
     renderAt(screenReference: ScreenType): void,
 };
 
@@ -15,6 +15,15 @@ export interface TextureType {
     parent: PrimitiveType | BallType | BrickType | PlatformType,
     load(): void,
     renderAt(screenReference: ScreenType): void,
+}
+
+export interface CRTFilterType {
+    width: number,
+    height: number,
+    lineHeight: number,
+    lineSpacing: number,
+    lineColor: string,
+    layer: HTMLCanvasElement,
 }
 
 export interface PrimitiveParams {
@@ -100,6 +109,7 @@ export interface GameType {
     screen: ScreenType,
     objects: GameObjectsType,
     onBrickBreak: Function,
+    neonStyle: boolean,
     run(): void,
     processIntersections(): void,
     render (): void,
@@ -108,6 +118,7 @@ export interface GameType {
 export interface ScreenType {
     body: HTMLCanvasElement,
     context: CanvasRenderingContext2D,
+    filter: CRTFilterType,
     width: number,
     height: number,
     bounds: BoundsType,
@@ -115,6 +126,7 @@ export interface ScreenType {
     clear():void,
     drawBackground(): void,
     drawBoundary(): void,
+    renderCrtFilter(): void,
 };
 
 
