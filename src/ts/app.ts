@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             endX: screen.width - (screen.bounds.padding * 8),   // end x
             endY: 300 + (screen.bounds.padding * 2)             // end y
         },
+        neonStyle: true,
 
         onBrickBreak: (bounces: BounceStatisticsType) => {
             ui.getElementById('scores').updateValue(bounces.fromBrick * 10);
@@ -94,6 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // render ui new values (depening on 'events')
         ui.render();
+
+        screen.renderCrtFilter();
 
         requestAnimationFrame(loop);
     }
