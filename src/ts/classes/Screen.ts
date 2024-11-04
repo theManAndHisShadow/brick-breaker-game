@@ -1,4 +1,5 @@
-import { ScreenType, BoundsType } from "../global.types";
+import { ScreenType, BoundsType, CRTFilterType } from "../global.types";
+import CRTFilter from "./CRTFilter";
 
 interface ScreenParams {
     width: number, 
@@ -13,6 +14,7 @@ interface ScreenParams {
 
 export default class Screen implements ScreenType {
     body: HTMLCanvasElement;
+    filter: CRTFilterType;
     context: CanvasRenderingContext2D;
     width: number;
     height: number;
@@ -38,6 +40,7 @@ export default class Screen implements ScreenType {
         // set canvas sizes
         canvas.width = params.width;
         canvas.height = params.height;
+
         
         this.body = canvas;
         this.context = context;
@@ -46,6 +49,14 @@ export default class Screen implements ScreenType {
         this.width = params.width;
         this.height = params.height;
         this.background = params.background;
+
+        this.filter = new CRTFilter({
+            width: params.width,
+            height: params.height,
+            lineHeight: 2,
+            lineSpacing: 4,
+            lineColor: 'rgba(0, 0, 0, 0.2)'
+        });
     }
 
     clear(): void {
@@ -55,6 +66,10 @@ export default class Screen implements ScreenType {
     drawBackground(): void {
         this.context.fillStyle = this.background;
         this.context.fillRect(0, 0, this.width, this.height);
+    }
+
+    renderCrtFilter(){
+        this.context.drawImage(this.filter.layer, 0, 0);
     }
 
     drawBoundary(): void {
