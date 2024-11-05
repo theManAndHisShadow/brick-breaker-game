@@ -38,7 +38,7 @@ export default class Brick extends Primitive implements BrickType {
     getColorBasedOnHealth(health: number): string {
         const colors = [
             'rgba(255, 255, 255, 0.05)', // 0
-            'rgba(215, 215, 215, 1)', // 1
+            'rgba(215, 215, 215, 1)',    // 1
         ];
 
         return colors[health];
@@ -51,6 +51,8 @@ export default class Brick extends Primitive implements BrickType {
 
             context.fillStyle = color;
             context.fillRect(x, y, width, height);
+
+            // temp deprecated
             // this.texture.renderAt(screenReference);
         }
     }
