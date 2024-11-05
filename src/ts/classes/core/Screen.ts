@@ -54,9 +54,9 @@ export default class Screen implements ScreenType {
         this.filter = new CRTFilter({
             width: params.width,
             height: params.height,
-            lineHeight: 2,
-            lineSpacing: 4,
-            lineColor: 'rgba(0, 0, 0, 0.2)'
+            lineHeight: 1,
+            lineSpacing: 2,
+            lineColor: 'rgba(0, 0, 0, 0.25)'
         });
     }
 
