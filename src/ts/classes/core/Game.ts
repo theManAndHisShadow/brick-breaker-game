@@ -54,7 +54,7 @@ export default class Game implements GameType {
         this.score = 0;
     }
 
-    protected generateBricksGrid(startX: number, startY: number, endX: number, endY: number, brickWidth: number = 60, brickHeight: number = 25): BrickType[] {
+    protected generateBricksGrid(startX: number, startY: number, endX: number, endY: number, brickWidth: number = 50, brickHeight: number = 25): BrickType[] {
         const offset = 1;
         const columns = Math.floor((endX - startX) / (brickWidth + offset));
         const rows = Math.floor((endY - startY) / (brickHeight + offset));
