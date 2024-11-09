@@ -171,3 +171,15 @@ export interface UIType {
     getElementById(id: string): UIElementType,
     render(): void,
 };
+
+export interface SoundStorage {
+    [key: string]: AudioBuffer,
+}
+
+export interface SoundComposerType {
+    context: AudioContext,
+    sfx: SoundStorage,
+    music: SoundStorage,
+    loadFile({path, type, name}: {path: string, type: string, name: string}): void,
+    play(type: string, name: string, gain: number): void,
+}
