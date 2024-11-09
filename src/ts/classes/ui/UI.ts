@@ -1,4 +1,4 @@
-import { ScreenType, UIElementType, UIType, UIElementBoundingRectType } from "../global.types";
+import { ScreenType, UIElementType, UIType, UIElementBoundingRectType } from "../../global.types";
 
 interface UIparams {
     screen: ScreenType, 
