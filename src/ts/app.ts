@@ -34,10 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
         screen: screen,
         neonStyle: true,
         bricksGridPos: {
-            startX: 0 + (screen.bounds.padding * 8),            // start x
-            startY: 0 + (screen.bounds.padding * 8),            // start y
-            endX: screen.width - (screen.bounds.padding * 8),   // end x
-            endY: 300 + (screen.bounds.padding * 2)             // end y
+            startX: 0 + (screen.bounds.padding * 10),            // start x
+            startY: 0 + (screen.bounds.padding * 8),             // start y
+            endX: screen.width - (screen.bounds.padding * 8),    // end x
+            endY: 300 + (screen.bounds.padding * 2)              // end y
         },
 
         onBrickBreak: (bounces: BounceStatisticsType) => {
