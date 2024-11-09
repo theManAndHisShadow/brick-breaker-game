@@ -104,11 +104,24 @@ export interface GameObjectsType {
     all: (PlatformType | BallType | BrickType)[],
 }
 
-export interface GameType {
+export interface GameEventData {
+    [key: string]: any;
+}
+
+export interface GameEventStorage {
+    [key: string]: Array<(data: GameEventData) => void>;
+}
+
+export interface GameEventTargetType {
+    events: GameEventStorage,
+    addEventListener(eventName: string, callback: (data: GameEventData) => void): void,
+    dispatchEvent(eventName: string, data: GameEventData): void,
+}
+
+export interface GameType extends GameEventTargetType {
     score: number,
     screen: ScreenType,
     objects: GameObjectsType,
-    onBrickBreak: Function,
     neonStyle: boolean,
     run(): void,
     processIntersections(): void,
