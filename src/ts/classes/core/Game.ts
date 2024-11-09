@@ -3,22 +3,23 @@ import { ScreenType, BallType, BrickType, BrickGridType, GameObjectsType, GameTy
 import Platform from "./Platform";
 import Ball from "./Ball";
 import Brick from "./Brick";
+import GameEventTarget from "./EventTarget";
 
 interface GameParams {
     bricksGridPos: BrickGridType,
     screen: ScreenType,
-    onBrickBreak: any,
     neonStyle: boolean,
 }
 
-export default class Game implements GameType {
+export default class Game extends GameEventTarget implements GameType {
     score: number;
     screen: ScreenType;
     objects: GameObjectsType;
-    onBrickBreak: Function;
     neonStyle: boolean;
 
     constructor(params: GameParams){
+        super();
+
         Object.assign(this, params);
         
         const objects: GameObjectsType = {
@@ -122,7 +123,7 @@ export default class Game implements GameType {
                     ball.bounces.fromBrick += 1;
                     ball.bounces.lastBounceFrom = 'brick';
 
-                    this.onBrickBreak(ball.bounces);
+                    this.dispatchEvent('brickBreak', ball.bounces);
                 }
             }
         }

@@ -1,4 +1,4 @@
-import { ScreenType, UIType, GameType, BounceStatisticsType } from "./global.types";
+import { ScreenType, UIType, GameType, BounceStatisticsType, GameEventData } from "./global.types";
 
 import Screen from "./classes/core/Screen";
 import Game from "./classes/core/Game";
@@ -40,10 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
             endX: screen.width - (screen.bounds.padding * 8),    // end x
             endY: 300 + (screen.bounds.padding * 2)              // end y
         },
+    });
 
-        onBrickBreak: (bounces: BounceStatisticsType) => {
-            ui.getElementById('scores').updateValue(bounces.fromBrick * 10);
-        }
+    game.addEventListener('brickBreak', data => {
+        ui.getElementById('scores').updateValue(data.fromBrick * 10);
     });
 
 
