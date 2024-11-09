@@ -1,5 +1,5 @@
 import Primitive from "./Primitive";
-import { PlatformType, PrimitiveParams, ScreenType } from "../global.types";
+import { PlatformType, PrimitiveParams, ScreenType } from "../../global.types";
 
 export default class Platform extends Primitive implements PlatformType {
     constructor(params: PrimitiveParams){

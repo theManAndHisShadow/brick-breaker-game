@@ -3,9 +3,28 @@ export interface PrimitiveType {
     height: number,
     x: number,
     y: number,
-    color: string,
+    color?: string,
+    
     renderAt(screenReference: ScreenType): void,
 };
+
+export interface TextureType {
+    loaded: boolean,
+    texture: HTMLImageElement,
+    url: string,
+    parent: PrimitiveType | BallType | BrickType | PlatformType,
+    load(): void,
+    renderAt(screenReference: ScreenType): void,
+}
+
+export interface CRTFilterType {
+    width: number,
+    height: number,
+    lineHeight: number,
+    lineSpacing: number,
+    lineColor: string,
+    layer: HTMLCanvasElement,
+}
 
 export interface PrimitiveParams {
     width: number;
@@ -54,6 +73,7 @@ export interface PlatformType extends PrimitiveType {};
 
 export interface BrickType extends PrimitiveType {
     health: number,
+    texture: TextureType,
     getColorBasedOnHealth(health: number): string,
     updateHealth(health: number): void,
 };
@@ -89,6 +109,7 @@ export interface GameType {
     screen: ScreenType,
     objects: GameObjectsType,
     onBrickBreak: Function,
+    neonStyle: boolean,
     run(): void,
     processIntersections(): void,
     render (): void,
@@ -97,13 +118,15 @@ export interface GameType {
 export interface ScreenType {
     body: HTMLCanvasElement,
     context: CanvasRenderingContext2D,
+    filter: CRTFilterType,
     width: number,
     height: number,
     bounds: BoundsType,
     background: 'black' | string,
     clear():void,
     drawBackground(): void,
-    drawBoundary(): void,
+    drawBoundary(neonStyle: boolean): void,
+    renderCrtFilter(): void,
 };
 
 

@@ -1,5 +1,5 @@
-import { getRandomFloat, getRandomInt } from "../helpers";
-import { ScreenType, BallType, BrickType, BrickGridType, GameObjectsType, GameType } from "../global.types";
+import { changeColorOpacity, getRandomFloat, getRandomInt } from "../../helpers";
+import { ScreenType, BallType, BrickType, BrickGridType, GameObjectsType, GameType } from "../../global.types";
 import Platform from "./Platform";
 import Ball from "./Ball";
 import Brick from "./Brick";
@@ -8,6 +8,7 @@ interface GameParams {
     bricksGridPos: BrickGridType,
     screen: ScreenType,
     onBrickBreak: any,
+    neonStyle: boolean,
 }
 
 export default class Game implements GameType {
@@ -15,6 +16,7 @@ export default class Game implements GameType {
     screen: ScreenType;
     objects: GameObjectsType;
     onBrickBreak: Function;
+    neonStyle: boolean;
 
     constructor(params: GameParams){
         Object.assign(this, params);
@@ -25,7 +27,7 @@ export default class Game implements GameType {
                 height: 8,
                 x: (params.screen.width / 2) - (100 / 2),
                 y: params.screen.height - 69,
-                color: 'rgb(115, 115, 115)',
+                color: 'rgb(255, 0, 0)',
             }),
             ball: new Ball({
                 color: 'white',
@@ -52,22 +54,23 @@ export default class Game implements GameType {
         this.score = 0;
     }
 
-    protected generateBricksGrid(startX: number, startY: number, endX: number, endY: number, brickSize:number = 20): BrickType[] {
+    protected generateBricksGrid(startX: number, startY: number, endX: number, endY: number, brickWidth: number = 50, brickHeight: number = 25): BrickType[] {
         const offset = 1;
-        const columns = Math.floor((endX - startX) / (brickSize + offset));
-        const rows = Math.floor((endY - startY) / (brickSize + offset));
+        const columns = Math.floor((endX - startX) / (brickWidth + offset));
+        const rows = Math.floor((endY - startY) / (brickHeight + offset));
         const generatedArray = [];
 
         for (let i = 0; i < columns; i++) {
             for (let j = 0; j < rows; j++) {
-                let health = getRandomInt(1, 5);
+                let health = getRandomInt(1, 1);
                 let brick = new Brick({
-                    width: brickSize,
-                    height: brickSize,
-                    x: startX + i * (brickSize + offset),
-                    y: startY + j * (brickSize + offset),
+                    width: brickWidth,
+                    height: brickHeight,
+                    x: startX + i * (brickWidth + offset),
+                    y: startY + j * (brickHeight + offset),
                     health: health,
                     color: 'rgba(255, 255, 255, 1)',
+                    texture: './b.png',
                 });
 
                 brick.color = brick.getColorBasedOnHealth(health);
@@ -158,8 +161,26 @@ export default class Game implements GameType {
     }
 
     render(): void {
+        const { context } = this.screen;
         for (let object of this.objects.all) {
+            // If the neon style is active, set the glow parameters
+            if (this.neonStyle === true) {
+                let gainedColor = changeColorOpacity(object.color, 1);
+                context.shadowBlur = 30;
+                context.shadowColor = gainedColor;
+            } else {
+                // Turn off glow for objects without neon
+                context.shadowBlur = 0;
+                context.shadowColor = 'transparent';
+            }
+            
+            // Rendering the object
             object.renderAt(this.screen);
+    
+            // Reset glow parameters after rendering
+            context.shadowBlur = 0;
+            context.shadowColor = 'transparent';
         }
     }
+    
 }

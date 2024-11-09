@@ -1,18 +1,18 @@
 import { ScreenType, UIType, GameType, BounceStatisticsType } from "./global.types";
 
-import Screen from "./classes/Screen";
+import Screen from "./classes/core/Screen";
+import Game from "./classes/core/Game";
 import UI from "./classes/UI";
-import Game from "./classes/Game";
 
 
 document.addEventListener('DOMContentLoaded', () => {
     const screen: ScreenType = new Screen({
         width: 800,
         height: 500,
-        background: 'black',
+        background: 'rgba(12, 7, 7, 1)',
         selector: 'div[data-game-id="brick-breaker"] canvas',
         boundaryPadding: 10,
-        boundsColor: 'red',
+        boundsColor: 'rgba(255, 0, 0, 1)',
         boundsThickness: 2,
         hideMouse: true,
     });
@@ -32,11 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const game: GameType = new Game({
         screen: screen,
+        neonStyle: true,
         bricksGridPos: {
-            startX: 0 + (screen.bounds.padding * 8),            // start x
-            startY: 0 + (screen.bounds.padding * 8),            // start y
-            endX: screen.width - (screen.bounds.padding * 8),   // end x
-            endY: 300 + (screen.bounds.padding * 2)             // end y
+            startX: 0 + (screen.bounds.padding * 10),            // start x
+            startY: 0 + (screen.bounds.padding * 8),             // start y
+            endX: screen.width - (screen.bounds.padding * 8),    // end x
+            endY: 300 + (screen.bounds.padding * 2)              // end y
         },
 
         onBrickBreak: (bounces: BounceStatisticsType) => {
@@ -81,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loop = () => {
         // Screen.clear();
         screen.drawBackground();
-        screen.drawBoundary();
+        screen.drawBoundary(game.neonStyle);
 
         // run - calc ball pos each frame
         game.run();
@@ -94,6 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // render ui new values (depening on 'events')
         ui.render();
+
+        screen.renderCrtFilter();
 
         requestAnimationFrame(loop);
     }

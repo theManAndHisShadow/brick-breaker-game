@@ -1,5 +1,5 @@
-import { ScreenType, TracerItem, TracerType } from "../global.types";
-import { getArrayLast, changeColorOpacity } from "../helpers";
+import { ScreenType, TracerItem, TracerType } from "../../global.types";
+import { getArrayLast, changeColorOpacity } from "../../helpers";
 
 interface TracerParams {
     memoryLimit?: number,
@@ -57,10 +57,11 @@ export default class Tracer implements TracerType {
         this.trace.forEach((point, index) => {
             if (typeof previousPoint !== "boolean") {
                 // Calculate percentage of the current point in the trace
-                const percentage = index / this.trace.length;
+                const percentage = (index / this.trace.length) * .3;
     
                 // Set stroke color with adjusted alpha for the segment
                 context.strokeStyle = changeColorOpacity(this.color, percentage);
+                context.lineWidth = 9;
     
                 // Draw line segment with adjusted transparency
                 context.beginPath();
