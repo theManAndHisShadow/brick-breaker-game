@@ -1,9 +1,10 @@
-import { ScreenType, UIType, GameType, BounceStatisticsType, GameEventData } from "./global.types";
+import { ScreenType, UIType, GameType, BounceStatisticsType, GameEventData, SoundComposerType } from "./global.types";
 
 import Screen from "./classes/core/Screen";
 import Game from "./classes/core/Game";
 import UI from "./classes/ui/UI";
 import FPSMeter from "./classes/ui/FPSMeter";
+import SoundComposer from "./classes/fx/SoundComposer";
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -31,6 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
         y: 30,
     });
 
+    const sounds: SoundComposerType = new SoundComposer();
+
+    sounds.loadFile({
+        type: 'sfx',
+        name: 'bounce',
+        path: './asstes/bounce.mp3',
+    })
+
     const game: GameType = new Game({
         screen: screen,
         neonStyle: true,
@@ -44,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     game.addEventListener('brickBreak', data => {
         ui.getElementById('scores').updateValue(data.fromBrick * 10);
+
+        sounds.play('sfx', 'bounce', 1);
     });
 
 
