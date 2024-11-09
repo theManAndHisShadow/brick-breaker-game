@@ -2,7 +2,8 @@ import { ScreenType, UIType, GameType, BounceStatisticsType } from "./global.typ
 
 import Screen from "./classes/core/Screen";
 import Game from "./classes/core/Game";
-import UI from "./classes/UI";
+import UI from "./classes/ui/UI";
+import FPSMeter from "./classes/ui/FPSMeter";
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -77,9 +78,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // 
+    const fpsMeter = new FPSMeter({
+        x: screen.body.width - 80,
+        y: 30,
+        color: `rgba(255, 255, 255, 0.4)`,
+    });
+
 
     // main function
     const loop = () => {
+        requestAnimationFrame(loop);
+
         // Screen.clear();
         screen.drawBackground();
         screen.drawBoundary(game.neonStyle);
@@ -96,9 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // render ui new values (depening on 'events')
         ui.render();
 
-        screen.renderCrtFilter();
+        // render current fps value
+        fpsMeter.renderAt(screen);
 
-        requestAnimationFrame(loop);
+        screen.renderCrtFilter();
     }
 
 
