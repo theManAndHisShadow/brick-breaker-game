@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sounds.loadFile({
         type: 'sfx',
         name: 'bound_bounce',
-        path: './asstes/brick_bounce.mp3',
+        path: './asstes/bound_bounce.mp3',
     });
 
     const game: GameType = new Game({
@@ -72,6 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     game.addEventListener('platformBounce', data => {
         sounds.play('sfx', 'platform_bounce', 1);
+    });
+
+    game.addEventListener('boundBounce', data => {
+        sounds.play('sfx', 'bound_bounce', 1);
     });
 
 

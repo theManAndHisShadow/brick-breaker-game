@@ -156,6 +156,8 @@ export default class Game extends GameEventTarget implements GameType {
         if (ballTop <= bounds.rect.top || ballBottom >= bounds.rect.bottom || ballLeft < bounds.rect.left || ballRight >= bounds.rect.right) {
             ball.bounces.fromBoundary += 1;
             ball.bounces.lastBounceFrom = 'bound';
+
+            this.dispatchEvent('boundBounce', {});
         }
     }
 
