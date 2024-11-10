@@ -135,6 +135,8 @@ export default class Game extends GameEventTarget implements GameType {
                 ball.calculateAngleChange(angleOffset); // Apply random angle only on platform bounce
                 ball.bounces.fromPlatform += 1;
                 ball.bounces.lastBounceFrom = 'platform';
+
+                this.dispatchEvent('platformBounce', {});
             }
         }
 

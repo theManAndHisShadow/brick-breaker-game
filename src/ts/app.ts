@@ -5,6 +5,7 @@ import Game from "./classes/core/Game";
 import UI from "./classes/ui/UI";
 import FPSMeter from "./classes/ui/FPSMeter";
 import SoundComposer from "./classes/fx/SoundComposer";
+import { getRandomInt } from "./helpers";
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -36,9 +37,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sounds.loadFile({
         type: 'sfx',
-        name: 'bounce',
-        path: './asstes/bounce.mp3',
-    })
+        name: 'platform_bounce',
+        path: './asstes/platform_bounce.mp3',
+    });
+
+    sounds.loadFile({
+        type: 'sfx',
+        name: 'brick_pop',
+        path: './asstes/brick_pop.mp3',
+    });
+
+    sounds.loadFile({
+        type: 'sfx',
+        name: 'bound_bounce',
+        path: './asstes/brick_bounce.mp3',
+    });
 
     const game: GameType = new Game({
         screen: screen,
@@ -54,7 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
     game.addEventListener('brickBreak', data => {
         ui.getElementById('scores').updateValue(data.fromBrick * 10);
 
-        sounds.play('sfx', 'bounce', 1);
+        sounds.play('sfx', `brick_pop`, 1);
+    });
+
+    game.addEventListener('platformBounce', data => {
+        sounds.play('sfx', 'platform_bounce', 1);
     });
 
 
