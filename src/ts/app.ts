@@ -35,22 +35,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const sounds: SoundComposerType = new SoundComposer();
 
+    // todo: move to own loading process method :)
     sounds.loadFile({
         type: 'sfx',
         name: 'platform_bounce',
-        path: './asstes/platform_bounce.mp3',
+        path: './assets/audio/platform_bounce.mp3',
     });
 
     sounds.loadFile({
         type: 'sfx',
         name: 'brick_pop',
-        path: './asstes/brick_pop.mp3',
+        path: './assets/audio/brick_pop.mp3',
     });
 
     sounds.loadFile({
         type: 'sfx',
         name: 'bound_bounce',
-        path: './asstes/bound_bounce.mp3',
+        path: './assets/audio/bound_bounce.mp3',
     });
 
     const game: GameType = new Game({
