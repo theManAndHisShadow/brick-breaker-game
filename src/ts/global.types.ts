@@ -154,7 +154,7 @@ export interface UIElementType {
     id: string,
     label: string,
     rect: UIElementBoundingRectType,
-    value: any,
+    value: number | string | boolean,
     fontSize: number,          
     fontName: string, 
     lineSpacing: number,        
@@ -167,7 +167,7 @@ export interface UIElementType {
 export interface UIType {
     items: UIElementType[],
     screen: ScreenType,
-    createElement({id, label, x, y}: {id: string, label: string, x: number, y: number}): UIElementType
+    createElement({id, label, x, y, value}: {id: string, label: string, x: number, y: number, value?: number | string | boolean}): UIElementType
     getElementById(id: string): UIElementType,
     render(): void,
 };

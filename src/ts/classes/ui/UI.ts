@@ -12,7 +12,7 @@ interface UIparams {
 interface UIElementParams {
     id: string,
     label: string,
-    value?: any,
+    value?: number | string | boolean,
     x: number,
     y: number,
     fontSize?: number,
@@ -25,7 +25,7 @@ interface UIElementParams {
 class UIElement implements UIElementType {
     id: string;
     label: string;
-    value: any;
+    value: number | string | boolean;
     parent: UIType;
     x: number;
     y: number;
@@ -101,10 +101,10 @@ export default class UI implements UIType {
         this.items = [];
     }
 
-    createElement({ id, label, x, y }: { id: string; label: string; x: number; y: number; }): UIElementType {
+    createElement({ id, label, x, y, value}: { id: string; label: string; x: number; y: number; value?: number | string | boolean; }): UIElementType {
         // Set default ui element params
         const defaultParams = {
-            value: 'empty',
+            value: 0,
             parent: this,
 
             fontSize: 16,          
@@ -116,7 +116,12 @@ export default class UI implements UIType {
 
         // combining passed params from external and default aprams
         let newElement = new UIElement({
-            id, label, x, y, ...defaultParams
+            ...defaultParams, 
+            id,
+            label,
+            x,
+            y,
+            value: value !== undefined ? value : defaultParams.value
         });
 
         this.items.push(newElement);
