@@ -142,6 +142,14 @@ export interface ScreenType {
     renderCrtFilter(): void,
 };
 
+export interface PictogramType {
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    texture: TextureType,
+    renderAt(screenReference: ScreenType): void,
+}
 
 export interface UIElementBoundingRectType {
     topLeft:     {x: number, y: number},
@@ -154,7 +162,7 @@ export interface UIElementType {
     id: string,
     label: string,
     rect: UIElementBoundingRectType,
-    value: number | string | boolean,
+    value: number | string | boolean | PictogramType | PictogramType[],
     fontSize: number,          
     fontName: string, 
     lineSpacing: number,        
@@ -167,7 +175,7 @@ export interface UIElementType {
 export interface UIType {
     items: UIElementType[],
     screen: ScreenType,
-    createElement({id, label, x, y, value, valueColor}: {id: string, label: string, x: number, y: number, value?: number | string | boolean, valueColor?: string}): UIElementType
+    createElement({id, label, x, y, value, valueColor}: {id: string, label: string, x: number, y: number, value?: number | string | boolean | PictogramType | PictogramType[], valueColor?: string}): UIElementType
     getElementById(id: string): UIElementType,
     render(): void,
 };
