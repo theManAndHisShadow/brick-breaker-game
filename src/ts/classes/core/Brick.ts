@@ -1,6 +1,6 @@
 import Primitive from "./Primitive";
 import { BrickType, ScreenType, TextureType } from "../../global.types";
-import Texture from "../fx/Texture";
+import Texture from "./Texture";
 
 interface BrickParams {
     health: number,
