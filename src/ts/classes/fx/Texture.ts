@@ -13,6 +13,8 @@ export default class Texture implements TextureType {
 
     constructor(params: TextureParams){
         Object.assign(this, params);
+
+        this.load();
     }
 
     load(): void {
