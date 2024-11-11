@@ -180,6 +180,6 @@ export interface SoundComposerType {
     context: AudioContext,
     sfx: SoundStorage,
     music: SoundStorage,
-    loadFile({path, type, name}: {path: string, type: string, name: string}): void,
+    loadFile({filename, type, name}: {filename: string, type: string, name: string}): void,
     play(type: string, name: string, gain: number): void,
 }

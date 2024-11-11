@@ -1,13 +1,20 @@
 import { SoundComposerType, SoundStorage } from "../../global.types";
 
+interface SoundComposerParams {
+    rootPath: string,
+}
+
 export default class SoundComposer implements SoundComposerType {
     context: AudioContext;
+    rootPath: string;
     sfx: SoundStorage;
     music: SoundStorage;
 
-    constructor(){
+    constructor(params: SoundComposerParams){
         // prop to saving Audio Context 
         this.context = new AudioContext();
+
+        this.rootPath = params.rootPath;
 
         // sound effects data
         this.sfx = {}
@@ -19,16 +26,18 @@ export default class SoundComposer implements SoundComposerType {
     /**
      * Loads file to SoundComposer
      */
-    loadFile ({path, type, name}: {path: string, type: "sfx" | "music", name: string}): void {
+    loadFile ({filename, type, name}: {filename: string, type: "sfx" | "music", name: string}): void {
         const request = new XMLHttpRequest();
-        request.open('GET', path, true);
+        const fullPath = `${this.rootPath}${type}/${filename}`;
+
+        request.open('GET', fullPath, true);
         request.responseType = 'arraybuffer';
 
         // Decode asynchronously
         request.onload = () => {
             this.context.decodeAudioData(request.response, buffer => {
                 if (!buffer) {
-                    console.log('Error decoding file data: ' + path);
+                    console.log('Error decoding file data using path: ' + fullPath);
                     return;
                 }
 
