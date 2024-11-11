@@ -1,9 +1,11 @@
-import { ScreenType, UIType, GameType, BounceStatisticsType, GameEventData } from "./global.types";
+import { ScreenType, UIType, GameType, BounceStatisticsType, GameEventData, SoundComposerType } from "./global.types";
 
 import Screen from "./classes/core/Screen";
 import Game from "./classes/core/Game";
 import UI from "./classes/ui/UI";
 import FPSMeter from "./classes/ui/FPSMeter";
+import SoundComposer from "./classes/fx/SoundComposer";
+import { getRandomInt } from "./helpers";
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -31,6 +33,35 @@ document.addEventListener('DOMContentLoaded', () => {
         y: 30,
     });
 
+    const sounds: SoundComposerType = new SoundComposer({
+        rootPath: './assets/audio/',
+    });
+
+    // todo: move to own loading process method :)
+    sounds.loadFile({
+        type: 'sfx',
+        name: 'platform_bounce',
+        filename: 'platform_bounce.mp3',
+    });
+
+    sounds.loadFile({
+        type: 'sfx',
+        name: 'brick_pop',
+        filename: 'brick_pop.mp3',
+    });
+
+    sounds.loadFile({
+        type: 'sfx',
+        name: 'bound_bounce',
+        filename: 'bound_bounce.mp3',
+    });
+
+    sounds.loadFile({
+        type: 'music',
+        name: 'welcome',
+        filename: 'welcome.mp3',
+    });
+
     const game: GameType = new Game({
         screen: screen,
         neonStyle: true,
@@ -44,6 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     game.addEventListener('brickBreak', data => {
         ui.getElementById('scores').updateValue(data.fromBrick * 10);
+
+        sounds.play('sfx', `brick_pop`, 1);
+    });
+
+    game.addEventListener('platformBounce', data => {
+        sounds.play('sfx', 'platform_bounce', 1);
+    });
+
+    game.addEventListener('boundBounce', data => {
+        sounds.play('sfx', 'bound_bounce', 1);
     });
 
 
@@ -85,6 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
         color: `rgba(255, 255, 255, 0.4)`,
     });
 
+    setTimeout(() => {
+        sounds.play('music', 'welcome', 1);
+    }, 500);
 
     // main function
     const loop = () => {
