@@ -101,7 +101,7 @@ export default class UI implements UIType {
         this.items = [];
     }
 
-    createElement({ id, label, x, y, value}: { id: string; label: string; x: number; y: number; value?: number | string | boolean; }): UIElementType {
+    createElement({ id, label, x, y, value, valueColor}: { id: string; label: string; x: number; y: number; value?: number | string | boolean; valueColor?: string}): UIElementType {
         // Set default ui element params
         const defaultParams = {
             value: 0,
@@ -121,7 +121,8 @@ export default class UI implements UIType {
             label,
             x,
             y,
-            value: value !== undefined ? value : defaultParams.value
+            value: value !== undefined ? value : defaultParams.value,
+            valueColor: valueColor !== undefined ? valueColor : defaultParams.valueColor,
         });
 
         this.items.push(newElement);

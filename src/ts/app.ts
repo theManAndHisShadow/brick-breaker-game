@@ -41,6 +41,15 @@ document.addEventListener('DOMContentLoaded', () => {
         y: 50,
     });
 
+    ui.createElement({
+        id: 'lives',
+        label: 'Lives',
+        value: "♥ ♥ ♥ ",
+        valueColor: "red",
+        x: 20,
+        y: 70,
+    });
+
     const sounds: SoundComposerType = new SoundComposer({
         rootPath: './assets/audio/',
     });

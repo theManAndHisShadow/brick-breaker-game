@@ -167,7 +167,7 @@ export interface UIElementType {
 export interface UIType {
     items: UIElementType[],
     screen: ScreenType,
-    createElement({id, label, x, y, value}: {id: string, label: string, x: number, y: number, value?: number | string | boolean}): UIElementType
+    createElement({id, label, x, y, value, valueColor}: {id: string, label: string, x: number, y: number, value?: number | string | boolean, valueColor?: string}): UIElementType
     getElementById(id: string): UIElementType,
     render(): void,
 };
