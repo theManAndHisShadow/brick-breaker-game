@@ -4,8 +4,8 @@ import Screen from "./classes/core/Screen";
 import Game from "./classes/core/Game";
 import UI from "./classes/ui/UI";
 import FPSMeter from "./classes/ui/FPSMeter";
-import SoundComposer from "./classes/fx/SoundComposer";
-import { getRandomInt } from "./helpers";
+import SoundComposer from "./classes/core/SoundComposer";
+import Pictogram from "./classes/ui/Pictogram";
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -44,7 +44,29 @@ document.addEventListener('DOMContentLoaded', () => {
     ui.createElement({
         id: 'lives',
         label: 'Lives',
-        value: "♥ ♥ ♥ ",
+        value: [
+            new Pictogram({
+                width: 16,
+                height: 16,
+                x: 80,
+                y: 56,
+                texture: './assets/textures/heart.png',
+            }),
+            new Pictogram({
+                width: 16,
+                height: 16,
+                x: 102,
+                y: 56,
+                texture: './assets/textures/heart.png',
+            }),
+            new Pictogram({
+                width: 16,
+                height: 16,
+                x: 124,
+                y: 56,
+                texture: './assets/textures/heart.png',
+            })
+        ],
         valueColor: "red",
         x: 20,
         y: 70,
