@@ -42,7 +42,7 @@ export default class FPSMeter {
             this.times.push(now);
 
             // Update the FPS value to the number of frames rendered in the last second
-            this.fps = this.times.length;
+            this.fps = this.times.length - 1;
 
             // Recursively call `updateFPS` to update the FPS on each frame
             this.updateFPS();

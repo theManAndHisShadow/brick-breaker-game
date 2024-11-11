@@ -1,4 +1,5 @@
-import { ScreenType, UIElementType, UIType, UIElementBoundingRectType } from "../../global.types";
+import { ScreenType, UIElementType, UIType, UIElementBoundingRectType, PictogramType } from "../../global.types";
+import Pictogram from "./Pictogram";
 
 interface UIparams {
     screen: ScreenType, 
@@ -12,7 +13,7 @@ interface UIparams {
 interface UIElementParams {
     id: string,
     label: string,
-    value?: any,
+    value?: number | string | boolean | PictogramType | PictogramType[],
     x: number,
     y: number,
     fontSize?: number,
@@ -22,10 +23,19 @@ interface UIElementParams {
     lineSpacing?: number,
 }
 
+interface UICreateElementMethodParams { 
+    id: string; 
+    label: string; 
+    x: number; 
+    y: number; 
+    value?: number | string | boolean | PictogramType | PictogramType[]; 
+    valueColor?: string
+}
+
 class UIElement implements UIElementType {
     id: string;
     label: string;
-    value: any;
+    value: number | string | boolean | PictogramType | PictogramType[];
     parent: UIType;
     x: number;
     y: number;
@@ -77,7 +87,9 @@ class UIElement implements UIElementType {
 
     render(): void {
         const { context } = this.parent.screen;
+        const isPrimitiveValue = typeof this.value === "number" || typeof this.value === "string" || typeof this.value === "boolean";
 
+        // render label
         // Font for rendering text  (setting second time)
         context.font = `${this.fontSize}px ${this.fontName}`;  
 
@@ -85,9 +97,24 @@ class UIElement implements UIElementType {
         context.fillStyle = this.labelColor;
         context.fillText(`${this.label}: `, this.x, this.y);
 
-        // Render the element value with the correct labell width offset
-        context.fillStyle = this.valueColor;
-        context.fillText(`${this.value}`, this.x + context.measureText(`${this.label}`).width + 13, this.y);
+        // render value
+        if(isPrimitiveValue) {
+
+            // Render the element value with the correct labell width offset
+            context.fillStyle = this.valueColor;
+            context.fillText(`${this.value}`, this.x + context.measureText(`${this.label}`).width + 13, this.y);
+        } else {
+            if(Array.isArray(this.value)) {                     // array of pictograms
+                this.value.forEach((pictogram, index) => {
+                    if(pictogram instanceof Pictogram) {
+                        pictogram.renderAt(this.parent.screen); 
+                    }
+                });
+            } else if(this.value instanceof Pictogram) {       // single pictogram
+                this.value.renderAt(this.parent.screen);
+            }
+        }
+
     }
 }
 
@@ -101,12 +128,11 @@ export default class UI implements UIType {
         this.items = [];
     }
 
-    createElement({ id, label, x, y }: { id: string; label: string; x: number; y: number; }): UIElementType {
+    createElement(params: UICreateElementMethodParams): UIElementType {
         // Set default ui element params
         const defaultParams = {
-            value: 'empty',
+            value: 0,
             parent: this,
-
             fontSize: 16,          
             fontName: 'monospace', 
             lineSpacing: 4,        
@@ -116,7 +142,13 @@ export default class UI implements UIType {
 
         // combining passed params from external and default aprams
         let newElement = new UIElement({
-            id, label, x, y, ...defaultParams
+            ...defaultParams, 
+            id: params.id,
+            label: params.label,
+            x: params.x,
+            y: params.y,
+            value: params.value !== undefined ? params.value : defaultParams.value,
+            valueColor: params.valueColor !== undefined ? params.valueColor : defaultParams.valueColor,
         });
 
         this.items.push(newElement);
