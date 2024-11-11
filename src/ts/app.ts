@@ -27,10 +27,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     ui.createElement({
+        id: 'current_level',
+        label: 'Level',
+        value: 1,
+        x: 20,
+        y: 30,
+    });
+
+    ui.createElement({
         id: 'scores',
         label: 'Scroes',
         x: 20,
-        y: 30,
+        y: 50,
     });
 
     const sounds: SoundComposerType = new SoundComposer({
